@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContextMock", "ContextMock.csproj", "{80916730-7192-463C-BFD4-F14CF49637A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpContextMoq", "HttpContextMoq\HttpContextMoq.csproj", "{71A72A39-B5D2-48C8-B2F9-6C2DF8C9C42F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{80916730-7192-463C-BFD4-F14CF49637A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80916730-7192-463C-BFD4-F14CF49637A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80916730-7192-463C-BFD4-F14CF49637A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80916730-7192-463C-BFD4-F14CF49637A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71A72A39-B5D2-48C8-B2F9-6C2DF8C9C42F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71A72A39-B5D2-48C8-B2F9-6C2DF8C9C42F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71A72A39-B5D2-48C8-B2F9-6C2DF8C9C42F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71A72A39-B5D2-48C8-B2F9-6C2DF8C9C42F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
