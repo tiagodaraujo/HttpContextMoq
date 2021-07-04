@@ -10,7 +10,12 @@ namespace HttpContextMoq
         public HttpContextMockBuilder WithUrl(string url)
         {
             this.url = url;
+            return this;
+        }
 
+        public HttpContextMockBuilder WithSession()
+        {
+            this.hasSession = true;
             return this;
         }
 
@@ -23,14 +28,18 @@ namespace HttpContextMoq
                 context.SetupUrl(this.url);
             }
 
+            if (hasSession)
+            {
+                context.SetupSession();
+            }
+
             return context;
         }
 
-        public static HttpContextMock Create(string url = null)
+        public static HttpContextMockBuilder Create(string url = null)
         {
             return new HttpContextMockBuilder()
-                .WithUrl(url)
-                .Build();
+                .WithUrl(url);
         }
     }
 }

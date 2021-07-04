@@ -13,6 +13,7 @@
         private HttpRequest _request;
         private HttpResponse _response;
         private IFeatureCollection _features;
+        private ISession _session;
         private ConnectionInfo _connection;
 
         public HttpContextMock()
@@ -24,11 +25,8 @@
             this.FeaturesMock = new FeatureCollectionMock();
             this.ConnectionMock = new ConnectionInfoMock();
             this.ItemsMock = new ItemsDictionaryMock();
-            this.SessionMock = new SessionMock();
             this.UserMock = new ClaimsPrincipalMock();
             this.RequestServicesMock = new ServiceProviderMock();
-
-            this.FeaturesMock.Mock.Setup(x => x.Get<ISessionFeature>()).Returns(new DefaultSessionFeature() { Session = SessionMock });
         }
 
         public Mock<HttpContext> Mock { get; }
@@ -129,7 +127,22 @@
 
         public override HttpResponse Response => _response;
 
-        public override ISession Session { get; set; }
+        public override ISession Session
+        {
+            get
+            {
+                if (_session == null)
+                {
+                    throw new InvalidOperationException("Session has not been configured for this application or request.");
+                }
+
+                return _session;
+            }
+            set
+            {
+                _session = value;
+            }
+        }
 
         public override string TraceIdentifier { get => this.Mock.Object.TraceIdentifier; set => this.Mock.Object.TraceIdentifier = value; }
 

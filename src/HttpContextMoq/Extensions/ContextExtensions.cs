@@ -41,5 +41,12 @@
             requestFeature.Setup(x => x.RawTarget).Returns(uri.PathAndQuery);
             httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<IHttpRequestFeature>()).Returns(requestFeature.Object);
         }
+
+        public static void SetupSession(this HttpContextMock httpContextMock)
+        {
+            var session = new SessionMock();
+            httpContextMock.SessionMock = session;
+            httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<ISessionFeature>()).Returns(new DefaultSessionFeature() { Session = session });
+        }
     }
 }
