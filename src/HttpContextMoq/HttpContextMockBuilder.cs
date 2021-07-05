@@ -23,7 +23,7 @@ namespace HttpContextMoq
         {
             var context = new HttpContextMock();
 
-            if (string.IsNullOrEmpty(this.url))
+            if (!string.IsNullOrEmpty(this.url))
             {
                 context.SetupUrl(this.url);
             }
