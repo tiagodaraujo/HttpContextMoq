@@ -1,13 +1,11 @@
-﻿namespace HttpContextMoq.Extensions
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Web;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Features;
-    using Microsoft.Extensions.Primitives;
-    using Moq;
+﻿using System;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.WebUtilities;
+using Moq;
 
+namespace HttpContextMoq.Extensions
+{
     public static class ContextExtensions
     {
         public static void SetupUrl(this HttpContextMock httpContextMock, string url)
@@ -27,15 +25,12 @@
 
             httpContextMock.RequestMock.Mock.Setup(x => x.PathBase).Returns(string.Empty);
             httpContextMock.RequestMock.Mock.Setup(x => x.Path).Returns(uri.AbsolutePath);
-            httpContextMock.RequestMock.Mock.Setup(x => x.QueryString).Returns(new QueryString(uri.Query));
 
-            var query = HttpUtility.ParseQueryString(uri.Query);
-            var paramQuery = new Dictionary<string, StringValues>();
-            foreach (var key in query.AllKeys)
-            {
-                paramQuery.Add(key, query[key]);
-            }
-            httpContextMock.RequestMock.Query = new QueryCollection(paramQuery);
+            var queryString = QueryString.FromUriComponent(uri);
+            httpContextMock.RequestMock.Mock.Setup(x => x.QueryString).Returns(queryString);
+
+            var queryDictionary = QueryHelpers.ParseQuery(queryString.ToString());
+            httpContextMock.RequestMock.Query = new QueryCollection(queryDictionary);
 
             var requestFeature = new Mock<IHttpRequestFeature>();
             requestFeature.Setup(x => x.RawTarget).Returns(uri.PathAndQuery);
