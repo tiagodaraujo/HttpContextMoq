@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpContextMoq", "HttpContextMoq\HttpContextMoq.csproj", "{71A72A39-B5D2-48C8-B2F9-6C2DF8C9C42F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpContextMoq.Tests", "..\tests\HttpContextMoq.Tests\HttpContextMoq.Tests.csproj", "{51C5864E-FA38-4B7E-9C29-51ECDAD50D18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpContextMoq.Tests", "..\tests\HttpContextMoq.Tests\HttpContextMoq.Tests.csproj", "{51C5864E-FA38-4B7E-9C29-51ECDAD50D18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
