@@ -3,10 +3,11 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http;
     using Moq;
 
-    public class SessionMock : ISession
+    public class SessionMock : ISession, IContextMock<ISession>
     {
         public SessionMock()
         {

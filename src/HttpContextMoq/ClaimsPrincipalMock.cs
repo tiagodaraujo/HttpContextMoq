@@ -5,9 +5,10 @@
     using System.IO;
     using System.Security.Claims;
     using System.Security.Principal;
+    using HttpContextMoq.Generic;
     using Moq;
 
-    public class ClaimsPrincipalMock : ClaimsPrincipal, IContextMock
+    public class ClaimsPrincipalMock : ClaimsPrincipal, IContextMocks<ClaimsPrincipal>
     {
         private IIdentity _identity;
 

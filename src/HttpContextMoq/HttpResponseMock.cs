@@ -3,10 +3,11 @@
     using System;
     using System.IO;
     using System.Threading.Tasks;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http;
     using Moq;
 
-    public class HttpResponseMock : HttpResponse, IContextMock
+    public class HttpResponseMock : HttpResponse, IContextMocks<HttpResponse>
     {
         private HttpContextMock _httpContextMock;
         private IHeaderDictionary _headers;

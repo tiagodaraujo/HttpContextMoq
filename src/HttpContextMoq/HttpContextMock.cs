@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Http.Features;
     using Moq;
 
-    public class HttpContextMock : HttpContext, IContextMock
+    public class HttpContextMock : HttpContext, IContextMocks<HttpContext>
     {
         private HttpRequest _request;
         private HttpResponse _response;

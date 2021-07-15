@@ -2,10 +2,11 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http;
     using Moq;
 
-    public class FormFileCollectionMock : IFormFileCollection
+    public class FormFileCollectionMock : IFormFileCollection, IContextMock<IFormFileCollection>
     {
         public FormFileCollectionMock()
         {

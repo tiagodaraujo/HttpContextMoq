@@ -2,10 +2,11 @@
 {
     using System.Collections;
     using System.Collections.Generic;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http;
     using Moq;
 
-    public class RequestCookieCollectionMock : IRequestCookieCollection
+    public class RequestCookieCollectionMock : IRequestCookieCollection, IContextMock<IRequestCookieCollection>
     {
         public RequestCookieCollectionMock()
         {

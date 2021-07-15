@@ -4,10 +4,11 @@
     using System.Security.Cryptography.X509Certificates;
     using System.Threading;
     using System.Threading.Tasks;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http;
     using Moq;
 
-    public class ConnectionInfoMock : ConnectionInfo
+    public class ConnectionInfoMock : ConnectionInfo, IContextMock<ConnectionInfo>
     {
         public ConnectionInfoMock()
         {

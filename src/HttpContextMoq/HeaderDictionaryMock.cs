@@ -3,11 +3,12 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Primitives;
     using Moq;
 
-    public class HeaderDictionaryMock : IHeaderDictionary
+    public class HeaderDictionaryMock : IHeaderDictionary, IContextMock<IHeaderDictionary>
     {
         public HeaderDictionaryMock()
         {

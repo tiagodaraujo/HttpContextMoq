@@ -3,10 +3,11 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using HttpContextMoq.Generic;
     using Microsoft.AspNetCore.Http.Features;
     using Moq;
 
-    public class FeatureCollectionMock : IFeatureCollection
+    public class FeatureCollectionMock : IFeatureCollection, IContextMock<IFeatureCollection>
     {
         public FeatureCollectionMock()
         {

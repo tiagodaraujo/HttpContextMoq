@@ -1,9 +1,10 @@
 ﻿namespace HttpContextMoq
 {
     using System;
+    using HttpContextMoq.Generic;
     using Moq;
 
-    public class ServiceProviderMock : IServiceProvider
+    public class ServiceProviderMock : IServiceProvider, IContextMock<IServiceProvider>
     {
         public ServiceProviderMock()
         {

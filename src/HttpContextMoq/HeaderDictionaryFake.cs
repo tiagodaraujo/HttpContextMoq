@@ -8,6 +8,7 @@ namespace HttpContextMoq
 {
     public class HeaderDictionaryFake : IHeaderDictionary
     {
+        //TODO: System.NotImplementedException
         public StringValues this[string key] { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         public long? ContentLength { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
