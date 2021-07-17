@@ -21,6 +21,8 @@ namespace HttpContextMoq.Tests
         public static IEnumerable<object[]> Data =>
             new UnitTest<ClaimsIdentityMock>[]
             {
+                //Class
+                new ContextMockUnitTest<ClaimsIdentityMock, ClaimsIdentity>(),
                 //Properties
                 new CallAndVerifyUnitTest<ClaimsIdentityMock>(
                     t => _ = t.AuthenticationType,

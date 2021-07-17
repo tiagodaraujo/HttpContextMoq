@@ -23,6 +23,8 @@ namespace HttpContextMoq.Tests
         public static IEnumerable<object[]> Data =>
             new UnitTest<ClaimsPrincipalMock>[]
             {
+                //Class
+                new ContextMockUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(),
                 //Properties
                 new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
                     t => _ = t.Claims,
