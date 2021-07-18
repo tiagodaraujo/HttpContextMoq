@@ -13,9 +13,7 @@ namespace HttpContextMoq.Tests
         [MemberData(nameof(Data))]
         public void ClaimsIdentityMock_WhenRun_AssertTrue(UnitTest<ClaimsIdentityMock> unitTest)
         {
-            var target = new ClaimsIdentityMock();
-
-            unitTest.Run(target);
+            unitTest.Run(() => new ClaimsIdentityMock());
         }
 
         public static IEnumerable<object[]> Data =>
@@ -24,70 +22,54 @@ namespace HttpContextMoq.Tests
                 //Class
                 new ContextMockUnitTest<ClaimsIdentityMock, ClaimsIdentity>(),
                 //Properties
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => _ = t.AuthenticationType,
-                    t => t.Mock.VerifyGet(x => x.AuthenticationType, Times.Once)
+                new PropertyGetUnitTest<ClaimsIdentityMock, ClaimsIdentity, string>(
+                    t => t.AuthenticationType
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => _ = t.Claims,
-                    t => t.Mock.VerifyGet(x => x.Claims, Times.Once)
+                new PropertyGetUnitTest<ClaimsIdentityMock, ClaimsIdentity, IEnumerable<Claim>>(
+                    t => t.Claims
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => _ = t.IsAuthenticated,
-                    t => t.Mock.VerifyGet(x => x.IsAuthenticated, Times.Once)
+                new PropertyGetUnitTest<ClaimsIdentityMock, ClaimsIdentity, bool>(
+                    t => t.IsAuthenticated
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => _ = t.Name,
-                    t => t.Mock.VerifyGet(x => x.Name, Times.Once)
+                new PropertyGetUnitTest<ClaimsIdentityMock, ClaimsIdentity, string>(
+                    t => t.Name
                 ),
                 //Methods
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.AddClaim(null),
-                    t => t.Mock.Verify(x => x.AddClaim(It.IsAny<Claim>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.AddClaim(It.IsAny<Claim>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.AddClaim(null),
-                    t => t.Mock.Verify(x => x.AddClaim(It.IsAny<Claim>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.AddClaim(It.IsAny<Claim>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.AddClaims(null),
-                    t => t.Mock.Verify(x => x.AddClaims(It.IsAny<IEnumerable<Claim>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.AddClaims(It.IsAny<IEnumerable<Claim>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.Clone(),
-                    t => t.Mock.Verify(x => x.Clone(), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.Clone()
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.FindAll(c => true),
-                    t => t.Mock.Verify(x => x.FindAll(It.IsAny<Predicate<Claim>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.FindAll(It.IsAny<Predicate<Claim>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.FindAll(string.Empty),
-                    t => t.Mock.Verify(x => x.FindAll(It.IsAny<string>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.FindAll(It.IsAny<string>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.FindFirst(c => true),
-                    t => t.Mock.Verify(x => x.FindFirst(It.IsAny<Predicate<Claim>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.FindFirst(It.IsAny<Predicate<Claim>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.FindFirst(string.Empty),
-                    t => t.Mock.Verify(x => x.FindFirst(It.IsAny<string>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.FindFirst(It.IsAny<string>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.HasClaim(c => true),
-                    t => t.Mock.Verify(x => x.HasClaim(It.IsAny<Predicate<Claim>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.HasClaim(It.IsAny<Predicate<Claim>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.HasClaim(null, null),
-                    t => t.Mock.Verify(x => x.HasClaim(It.IsAny<string>(), It.IsAny<string>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.HasClaim(It.IsAny<string>(), It.IsAny<string>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.TryRemoveClaim(null),
-                    t => t.Mock.Verify(x => x.TryRemoveClaim(It.IsAny<Claim>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.TryRemoveClaim(It.IsAny<Claim>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsIdentityMock>(
-                    t => t.WriteTo(null),
-                    t => t.Mock.Verify(x => x.WriteTo(It.IsAny<BinaryWriter>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.WriteTo(It.IsAny<BinaryWriter>())
                 ),
             }.ToData();
     }

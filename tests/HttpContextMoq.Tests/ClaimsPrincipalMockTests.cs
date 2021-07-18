@@ -13,11 +13,9 @@ namespace HttpContextMoq.Tests
     {
         [Theory]
         [MemberData(nameof(Data))]
-        public void ClaimsIdentityMock_WhenRun_AssertTrue(UnitTest<ClaimsPrincipalMock> unitTest)
+        public void ClaimsPrincipalMock_WhenRun_AssertTrue(UnitTest<ClaimsPrincipalMock> unitTest)
         {
-            var target = new ClaimsPrincipalMock();
-
-            unitTest.Run(target);
+            unitTest.Run(() => new ClaimsPrincipalMock());
         }
 
         public static IEnumerable<object[]> Data =>
@@ -26,66 +24,52 @@ namespace HttpContextMoq.Tests
                 //Class
                 new ContextMockUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(),
                 //Properties
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => _ = t.Claims,
-                    t => t.Mock.VerifyGet(x => x.Claims, Times.Once)
+                new PropertyGetUnitTest<ClaimsPrincipalMock, ClaimsPrincipal, IEnumerable<Claim>>(
+                    t => t.Claims
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => _ = t.Identities,
-                    t => t.Mock.VerifyGet(x => x.Identities, Times.Once)
+                new PropertyGetUnitTest<ClaimsPrincipalMock, ClaimsPrincipal, IEnumerable<ClaimsIdentity>>(
+                    t => t.Identities
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => _ = t.Identity,
-                    t => t.Mock.VerifyGet(x => x.Identity, Times.Never)
+                new PropertyGetUnitTest<ClaimsPrincipalMock, ClaimsPrincipal, IIdentity>(
+                    t => t.Identity, Times.Never
                 ),
-                new SetAndVerifyGetUnitTest<ClaimsPrincipalMock, IIdentity>(
+                new FuncAndAssertResultUnitTest<ClaimsPrincipalMock, IIdentity>(
                     t => t.IdentityMock = new ClaimsIdentityMock(),
                     (t, v) => t.Identity.Should().BeSameAs(v)
                 ),
                 //Methods
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.AddIdentities(null),
-                    t => t.Mock.Verify(x => x.AddIdentities(It.IsAny<IEnumerable<ClaimsIdentity>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.AddIdentities(It.IsAny<IEnumerable<ClaimsIdentity>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.AddIdentity(null),
-                    t => t.Mock.Verify(x => x.AddIdentity(It.IsAny<ClaimsIdentity>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.AddIdentity(It.IsAny<ClaimsIdentity>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.Clone(),
-                    t => t.Mock.Verify(x => x.Clone(), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.Clone()
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.FindAll(c => true),
-                    t => t.Mock.Verify(x => x.FindAll(It.IsAny<Predicate<Claim>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.FindAll(It.IsAny<Predicate<Claim>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.FindAll(string.Empty),
-                    t => t.Mock.Verify(x => x.FindAll(It.IsAny<string>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.FindAll(It.IsAny<string>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.FindFirst(c => true),
-                    t => t.Mock.Verify(x => x.FindFirst(It.IsAny<Predicate<Claim>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.FindFirst(It.IsAny<Predicate<Claim>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.FindFirst(string.Empty),
-                    t => t.Mock.Verify(x => x.FindFirst(It.IsAny<string>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.FindFirst(It.IsAny<string>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.HasClaim(c => true),
-                    t => t.Mock.Verify(x => x.HasClaim(It.IsAny<Predicate<Claim>>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.HasClaim(It.IsAny<Predicate<Claim>>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.HasClaim(null, null),
-                    t => t.Mock.Verify(x => x.HasClaim(It.IsAny<string>(), It.IsAny<string>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.HasClaim(It.IsAny<string>(), It.IsAny<string>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.IsInRole(null),
-                    t => t.Mock.Verify(x => x.IsInRole(It.IsAny<string>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.IsInRole(It.IsAny<string>())
                 ),
-                new CallAndVerifyUnitTest<ClaimsPrincipalMock>(
-                    t => t.WriteTo(null),
-                    t => t.Mock.Verify(x => x.WriteTo(It.IsAny<BinaryWriter>()), Times.Once)
+                new MethodInvokeUnitTest<ClaimsPrincipalMock, ClaimsPrincipal>(
+                    t => t.WriteTo(It.IsAny<BinaryWriter>())
                 ),
             }.ToData();
     }
