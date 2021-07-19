@@ -7,12 +7,17 @@ namespace HttpContextMoq.Tests
         where TResult : class
     {
         private readonly Func<TTarget, TResult> _act;
-        private readonly Action<TTarget, TResult> _assert;
+        private readonly Action<TTarget, TResult>[] _asserts;
 
-        public FuncAndAssertResultUnitTest(Func<TTarget, TResult> act, Action<TTarget, TResult> assert) 
+        public FuncAndAssertResultUnitTest(Func<TTarget, TResult> act, Action<TTarget, TResult> assert)
+            : this(act, new[] { assert })
+        {
+        }
+
+        public FuncAndAssertResultUnitTest(Func<TTarget, TResult> act, params Action<TTarget, TResult>[] assert)
         {
             _act = act;
-            _assert = assert;
+            _asserts = assert;
         }
 
         public override void Run(Func<TTarget> targetFactory)
@@ -24,7 +29,10 @@ namespace HttpContextMoq.Tests
             var result = _act(target);
 
             //Assert
-            _assert(target, result);
+            foreach (var assert in _asserts)
+            {
+                assert(target, result);
+            }
         }
     }
 }

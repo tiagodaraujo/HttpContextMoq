@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Principal;
 using System.Threading;
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
@@ -34,7 +29,7 @@ namespace HttpContextMoq.Tests
                 ),
                 new PropertyGetSetUnitTest<ConnectionInfoMock, ConnectionInfo, string>(
                     t => t.Id,
-                    t => t.Id = string.Empty
+                    t => t.Id = Fakes.String
                 ),
                 new PropertyGetSetUnitTest<ConnectionInfoMock, ConnectionInfo, IPAddress>(
                     t => t.LocalIpAddress,
@@ -42,7 +37,7 @@ namespace HttpContextMoq.Tests
                 ),
                 new PropertyGetSetUnitTest<ConnectionInfoMock, ConnectionInfo, int>(
                     t => t.LocalPort,
-                    t => t.LocalPort = int.MinValue
+                    t => t.LocalPort = Fakes.Int
                 ),
                 new PropertyGetSetUnitTest<ConnectionInfoMock, ConnectionInfo, IPAddress>(
                     t => t.RemoteIpAddress,
@@ -50,7 +45,7 @@ namespace HttpContextMoq.Tests
                 ),
                 new PropertyGetSetUnitTest<ConnectionInfoMock, ConnectionInfo, int>(
                     t => t.RemotePort,
-                    t => t.RemotePort = int.MinValue
+                    t => t.RemotePort = Fakes.Int
                 ),
                 //Methods
                 new MethodInvokeUnitTest<ConnectionInfoMock, ConnectionInfo>(
