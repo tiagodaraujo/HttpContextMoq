@@ -2,14 +2,28 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <!-- <TargetFrameworks>netcoreapp3.0,netcoreapp3.1,net5.0</TargetFrameworks> -->
-
-    <RootNamespace>HttpContextMoq</RootNamespace>
+    <!--<TargetFrameworks>netcoreapp3.0,netcoreapp3.1,net5.0</TargetFrameworks>-->
     <AssemblyName>HttpContextMoq</AssemblyName>
+    <RootNamespace>HttpContextMoq</RootNamespace>
+    <AssetTargetFallback>
+      $(AssetTargetFallback);netstandard2.0
+    </AssetTargetFallback>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>9.0</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- NuGet packaging -->
+    <IsPackable>True</IsPackable>
+    <PackageId>HttpContextMoq</PackageId>
+    <Title>HttpContextMoq: Easy mocking for ASP.NET Core HttpContext</Title>
     <Authors>Tiago Araújo</Authors>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/tiagodaraujo/httpcontextmoq</PackageProjectUrl>
     <RepositoryUrl>https://github.com/tiagodaraujo/httpcontextmoq</RepositoryUrl>
-    <PackageTags>aspnetcore httpcontext moq</PackageTags>
+    <PackageTags>aspnetcore httpcontext moq mocking mocks tdd unittesting unittest</PackageTags>
+    <IncludeSymbols>false</IncludeSymbols>
     <Version>1.0.2</Version>
   </PropertyGroup>
 
@@ -18,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq" Version="4.16.1" />
+    <PackageReference Include="Moq" Version="4.16.1" NoWarn="NU1701" />
   </ItemGroup>
 
 </Project>
