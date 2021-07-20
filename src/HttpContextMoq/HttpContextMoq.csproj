@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <!--<TargetFrameworks>netcoreapp3.0,netcoreapp3.1,net5.0</TargetFrameworks>-->
+    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.0;netcoreapp3.1;net5.0</TargetFrameworks>
     <AssemblyName>HttpContextMoq</AssemblyName>
     <RootNamespace>HttpContextMoq</RootNamespace>
     <AssetTargetFallback>
-      $(AssetTargetFallback);netstandard2.0
+      $(AssetTargetFallback);netstandard2.0;netstandard2.1
     </AssetTargetFallback>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
     <LangVersion>9.0</LangVersion>
+    <NoWarn>NETSDK1138</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -27,8 +27,14 @@
     <Version>1.0.2</Version>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' or '$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0' ">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.1' or '$(TargetFramework)' == 'netstandard2.0' ">
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" NoWarn="NU1701" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" NoWarn="NU1701" />
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" NoWarn="NU1701" />
   </ItemGroup>
 
   <ItemGroup>

@@ -30,7 +30,7 @@ namespace HttpContextMoq.Extensions
             httpContextMock.RequestMock.Mock.Setup(x => x.QueryString).Returns(queryString);
 
             var queryDictionary = QueryHelpers.ParseQuery(queryString.ToString());
-            httpContextMock.RequestMock.Query = new QueryCollection(queryDictionary);
+            httpContextMock.RequestMock.Query = new QueryCollectionFake(queryDictionary);
 
             var requestFeature = new Mock<IHttpRequestFeature>();
             requestFeature.Setup(x => x.RawTarget).Returns(uri.PathAndQuery);
@@ -41,7 +41,7 @@ namespace HttpContextMoq.Extensions
         {
             var session = new SessionMock();
             httpContextMock.SessionMock = session;
-            httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<ISessionFeature>()).Returns(new DefaultSessionFeature() { Session = session });
+            httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<ISessionFeature>()).Returns(new SessionFeatureFake() { Session = session });
         }
     }
 }

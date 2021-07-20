@@ -9,6 +9,10 @@
     using Microsoft.AspNetCore.Http.Features;
     using Moq;
 
+#if NETSTANDARD
+    using Microsoft.AspNetCore.Http.Authentication;
+#endif
+
     public class HttpContextMock : HttpContext, IContextMocks<HttpContext>
     {
         private HttpRequest _request;
@@ -152,5 +156,10 @@
         public override WebSocketManager WebSockets => this.Mock.Object.WebSockets;
 
         public override void Abort() => this.Mock.Object.Abort();
+
+#if NETSTANDARD
+        [Obsolete]
+        public override AuthenticationManager Authentication => this.Mock.Object.Authentication;
+#endif
     }
 }

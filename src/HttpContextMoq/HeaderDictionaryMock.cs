@@ -55,7 +55,7 @@
 
         public bool Remove(KeyValuePair<string, StringValues> item) => this.Mock.Object.Remove(item);
 
-        public bool TryGetValue(string key, [MaybeNullWhen(false)] out StringValues value) => this.Mock.Object.TryGetValue(key, out value);
+        public bool TryGetValue(string key, out StringValues value) => this.Mock.Object.TryGetValue(key, out value);
 
         IEnumerator IEnumerable.GetEnumerator() => this.Mock.Object.GetEnumerator();
     }

@@ -66,7 +66,7 @@ namespace HttpContextMoq
             throw new System.NotImplementedException();
         }
 
-        public bool TryGetValue(string key, [MaybeNullWhen(false)] out StringValues value)
+        public bool TryGetValue(string key, out StringValues value)
         {
             throw new System.NotImplementedException();
         }
