@@ -20,13 +20,13 @@ namespace HttpContextMoq.Tests
 
         public override void Run(Func<TContextMock> targetFactory)
         {
-            //arrange
+            // Arrange
             var target = targetFactory.Invoke();
 
-            //act
+            // Act
             _invokeExpression.Compile().Invoke(target);
 
-            //assert
+            // Assert
             target.Mock.Verify(_invokeExpression, _times ?? Times.Once);
         }
     }

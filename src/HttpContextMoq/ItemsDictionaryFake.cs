@@ -1,8 +1,8 @@
-﻿namespace HttpContextMoq
-{
-    using System.Collections;
-    using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
+namespace HttpContextMoq
+{
     public class ItemsDictionaryFake : IDictionary<object, object>
     {
         private IDictionary<object, object> _items = new Dictionary<object, object>();

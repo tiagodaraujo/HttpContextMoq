@@ -1,13 +1,12 @@
-﻿namespace HttpContextMoq
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using HttpContextMoq.Generic;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Primitives;
-    using Moq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using HttpContextMoq.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class HeaderDictionaryMock : IHeaderDictionary, IContextMock<IHeaderDictionary>
     {
         public HeaderDictionaryMock()

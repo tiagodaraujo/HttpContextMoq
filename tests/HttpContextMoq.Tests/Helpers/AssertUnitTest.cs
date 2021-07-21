@@ -13,10 +13,10 @@ namespace HttpContextMoq.Tests
 
         public override void Run(Func<TTarget> targetFactory)
         {
-            //arrange
+            // Arrange
             var target = targetFactory.Invoke();
 
-            //Assert
+            // Assert
             foreach (var assert in _asserts)
             {
                 assert(target);

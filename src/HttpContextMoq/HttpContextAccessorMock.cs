@@ -1,7 +1,7 @@
-﻿namespace HttpContextMoq
-{
-    using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
+namespace HttpContextMoq
+{
     public class HttpContextAccessorMock : IHttpContextAccessor
     {
         public HttpContextAccessorMock()

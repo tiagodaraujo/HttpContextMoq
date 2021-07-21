@@ -1,9 +1,9 @@
-﻿namespace HttpContextMoq
-{
-    using System;
-    using HttpContextMoq.Generic;
-    using Moq;
+﻿using System;
+using HttpContextMoq.Generic;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class ServiceProviderMock : IServiceProvider, IContextMock<IServiceProvider>
     {
         public ServiceProviderMock()

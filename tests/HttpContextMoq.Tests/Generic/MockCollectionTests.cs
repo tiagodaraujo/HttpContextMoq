@@ -9,13 +9,13 @@ namespace HttpContextMoq.Tests.Generic
         [Fact]
         public void MockCollection_WhenConstructer_ShouldAddSelfToTheCollection()
         {
-            //arrange
+            // Arrange
             var constructor = new object();
 
-            //act
+            // Act
             var target = new MockCollection(constructor);
 
-            //assert
+            // Assert
             var result = target.Get<object>();
             result.Should().BeSameAs(constructor);
         }
@@ -23,15 +23,15 @@ namespace HttpContextMoq.Tests.Generic
         [Fact]
         public void MockCollection_WhenAdd_ExpectGet()
         {
-            //arrange
+            // Arrange
             var expected = new object();
             var constructor = new object();
             var target = new MockCollection(constructor);
 
-            //act
+            // Act
             target.Add(expected);
 
-            //assert
+            // Assert
             var result = target.Get<object>();
             result.Should().BeSameAs(expected);
         }
@@ -39,17 +39,17 @@ namespace HttpContextMoq.Tests.Generic
         [Fact]
         public void MockCollection_WhenAddTwoOfSameType_ShoudlReplaceTheFirstOne()
         {
-            //arrange
+            // Arrange
             var expected = new object();
             var first = new object();
             var constructor = new object();
             var target = new MockCollection(constructor);
 
-            //act
+            // Act
             target.Add(first);
             target.Add(expected);
 
-            //assert
+            // Assert
             var result = target.Get<object>();
             result.Should().BeSameAs(expected);
         }
@@ -57,14 +57,14 @@ namespace HttpContextMoq.Tests.Generic
         [Fact]
         public void MockCollection_WhenGetTypeNotExists_ShouldBeNull()
         {
-            //arrange
+            // Arrange
             var constructor = new object();
             var target = new MockCollection(constructor);
 
-            //act
+            // Act
             var result = target.Get<object[]>();
 
-            //assert
+            // Assert
             result.Should().BeNull();
         }
     }

@@ -1,18 +1,17 @@
-﻿namespace HttpContextMoq
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Security.Claims;
-    using System.Threading;
-    using HttpContextMoq.Generic;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Http.Features;
-    using Moq;
-
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading;
+using HttpContextMoq.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Moq;
 #if NETSTANDARD
-    using Microsoft.AspNetCore.Http.Authentication;
+using Microsoft.AspNetCore.Http.Authentication;
 #endif
 
+namespace HttpContextMoq
+{
     public class HttpContextMock : HttpContext, IContextMocks<HttpContext>
     {
         private HttpRequest _request;

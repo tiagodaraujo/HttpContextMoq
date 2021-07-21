@@ -1,9 +1,9 @@
-﻿namespace HttpContextMoq
-{
-    using HttpContextMoq.Generic;
-    using Microsoft.AspNetCore.Http;
-    using Moq;
+﻿using HttpContextMoq.Generic;
+using Microsoft.AspNetCore.Http;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class ResponseCookiesMock : IResponseCookies, IContextMock<IResponseCookies>
     {
         public ResponseCookiesMock()

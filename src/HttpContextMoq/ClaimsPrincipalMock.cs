@@ -1,13 +1,13 @@
-﻿namespace HttpContextMoq
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Security.Claims;
-    using System.Security.Principal;
-    using HttpContextMoq.Generic;
-    using Moq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security.Claims;
+using System.Security.Principal;
+using HttpContextMoq.Generic;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class ClaimsPrincipalMock : ClaimsPrincipal, IContextMocks<ClaimsPrincipal>
     {
         private IIdentity _identity;

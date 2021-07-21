@@ -11,10 +11,10 @@ namespace HttpContextMoq.Tests
     {
         public override void Run(Func<TTarget> targetFactory)
         {
-            //Act
+            // Act
             var target = targetFactory.Invoke();
 
-            //Assert
+            // Assert
             target.Mock.Should().NotBeNull();
             target.Mock.Should().BeOfType(typeof(Mock<TSubTarget>));
 

@@ -1,12 +1,12 @@
-﻿namespace HttpContextMoq
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Security.Claims;
-    using HttpContextMoq.Generic;
-    using Moq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Security.Claims;
+using HttpContextMoq.Generic;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class ClaimsIdentityMock : ClaimsIdentity, IContextMock<ClaimsIdentity>
     {
         public ClaimsIdentityMock()

@@ -1,12 +1,12 @@
-﻿namespace HttpContextMoq
-{
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
-    using HttpContextMoq.Generic;
-    using Microsoft.AspNetCore.Http;
-    using Moq;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using HttpContextMoq.Generic;
+using Microsoft.AspNetCore.Http;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class HttpResponseMock : HttpResponse, IContextMocks<HttpResponse>
     {
         private HttpContextMock _httpContextMock;

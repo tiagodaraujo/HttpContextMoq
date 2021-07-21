@@ -16,13 +16,13 @@ namespace HttpContextMoq.Extensions.Tests
         [InlineData("http:/localhost", typeof(UriFormatException))]
         public void SetupUrl_WhenUrlIsInvalid_ThrowsException(string url, Type exception)
         {
-            //Arrange
+            // Arrange
             var context = new HttpContextMockBuilder().Build();
 
-            //Act
+            // Act
             void act() => context.SetupUrl(url);
 
-            //Assert
+            // Assert
             Assert.Throws(exception, act);
         }
 
@@ -32,14 +32,14 @@ namespace HttpContextMoq.Extensions.Tests
         [InlineData("https://localhost?param=value", "param", "value", 1, true)]
         public void SetupUrl_WhenUrlIsValid_QueryShouldBeMocked(string url, string queryParam, string queryValue, int queryCount, bool queryExist)
         {
-            //Arrange
+            // Arrange
             var context = new HttpContextMockBuilder().Build();
 
-            //Act
+            // Act
             context.SetupUrl(url);
             var query = context.Request.Query;
 
-            //Assert
+            // Assert
             query.ContainsKey(queryParam).Should().Be(queryExist);
             query.Count.Should().Be(queryCount);
             query.Keys.Should().HaveCount(queryCount);
@@ -59,16 +59,16 @@ namespace HttpContextMoq.Extensions.Tests
         [InlineData("https://localhost/?query", true, "https", "localhost", "/", "?query")]
         public void SetupUrl_WhenUrlIsValid_RequestShouldBeMocked(string url, bool isHttps, string scheme, string host, string path, string queryString)
         {
-            //Arrange
+            // Arrange
             var context = new HttpContextMockBuilder().Build();
             var queryDictionary = QueryHelpers.ParseQuery(queryString);
 
-            //Act
+            // Act
             context.SetupUrl(url);
             var request = context.Request;
             var requestFeature = context.Features.Get<IHttpRequestFeature>();
 
-            //Assert
+            // Assert
             request.IsHttps.Should().Be(isHttps);
             request.Scheme.Should().Be(scheme);
             request.Host.ToString().Should().Be(host);

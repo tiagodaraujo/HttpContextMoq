@@ -1,11 +1,11 @@
-﻿namespace HttpContextMoq
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using HttpContextMoq.Generic;
-    using Microsoft.AspNetCore.Http;
-    using Moq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using HttpContextMoq.Generic;
+using Microsoft.AspNetCore.Http;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class FormFileCollectionMock : IFormFileCollection, IContextMock<IFormFileCollection>
     {
         public FormFileCollectionMock()

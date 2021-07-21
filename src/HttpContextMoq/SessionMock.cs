@@ -1,12 +1,12 @@
-﻿namespace HttpContextMoq
-{
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using HttpContextMoq.Generic;
-    using Microsoft.AspNetCore.Http;
-    using Moq;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using HttpContextMoq.Generic;
+using Microsoft.AspNetCore.Http;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class SessionMock : ISession, IContextMock<ISession>
     {
         public SessionMock()

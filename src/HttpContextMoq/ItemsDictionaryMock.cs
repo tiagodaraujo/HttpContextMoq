@@ -1,10 +1,10 @@
-﻿namespace HttpContextMoq
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using HttpContextMoq.Generic;
-    using Moq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using HttpContextMoq.Generic;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class ItemsDictionaryMock : IDictionary<object, object>, IContextMock<IDictionary<object, object>>
     {
         public ItemsDictionaryMock()

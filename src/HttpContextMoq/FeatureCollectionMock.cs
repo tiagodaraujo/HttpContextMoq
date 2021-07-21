@@ -1,12 +1,12 @@
-﻿namespace HttpContextMoq
-{
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using HttpContextMoq.Generic;
-    using Microsoft.AspNetCore.Http.Features;
-    using Moq;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using HttpContextMoq.Generic;
+using Microsoft.AspNetCore.Http.Features;
+using Moq;
 
+namespace HttpContextMoq
+{
     public class FeatureCollectionMock : IFeatureCollection, IContextMock<IFeatureCollection>
     {
         public FeatureCollectionMock()
