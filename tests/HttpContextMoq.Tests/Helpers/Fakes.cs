@@ -9,16 +9,24 @@ namespace HttpContextMoq.Tests
         private readonly static Random Random = new Random();
 
         // Primitives
-        public static string String = new Guid().ToString();
+        public static bool Bool = true;
+        public static byte[] ByteArray = new byte[] { };
         public static int Int = Random.Next();
         public static long Long = Random.Next();
-        internal static bool Bool = true;
+        public static string String = new Guid().ToString();
 
         // Structs
+        public static CancellationToken CancellationToken = new CancellationToken();
         public static string StringValues = new StringValues(String);
-        internal static CancellationToken CancellationToken = new CancellationToken();
+
+        // Classes
+        public static object Object = new object();
+        public static readonly Type Type = typeof(Fakes);
 
         // Out Variables
+        public static byte[] OutByteArray;
+        public static object OutObject;
+        public static string OutString;
         public static StringValues OutStringValues;
     }
 }
