@@ -8,7 +8,7 @@ namespace HttpContextMoq.Extensions
 {
     public static class ContextExtensions
     {
-        public static void SetupUrl(this HttpContextMock httpContextMock, string url)
+        public static HttpContextMock SetupUrl(this HttpContextMock httpContextMock, string url)
         {
             var uri = new Uri(url);
 
@@ -35,13 +35,17 @@ namespace HttpContextMoq.Extensions
             var requestFeature = new Mock<IHttpRequestFeature>();
             requestFeature.Setup(x => x.RawTarget).Returns(uri.PathAndQuery);
             httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<IHttpRequestFeature>()).Returns(requestFeature.Object);
+
+            return httpContextMock;
         }
 
-        public static void SetupSession(this HttpContextMock httpContextMock)
+        public static HttpContextMock SetupSession(this HttpContextMock httpContextMock)
         {
             var session = new SessionMock();
             httpContextMock.SessionMock = session;
             httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<ISessionFeature>()).Returns(new SessionFeatureFake() { Session = session });
+
+            return httpContextMock;
         }
     }
 }

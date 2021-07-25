@@ -12,7 +12,7 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void User()
         {
-            var context = HttpContextMockBuilder.Create().Build();
+            var context = new HttpContextMock();
 
             context.UserMock.Mock.Setup(u => u.HasClaim(type, value)).Returns(true);
 

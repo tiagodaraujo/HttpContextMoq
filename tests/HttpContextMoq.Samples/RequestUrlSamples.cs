@@ -1,4 +1,5 @@
 using FluentAssertions;
+using HttpContextMoq.Extensions;
 using Microsoft.AspNetCore.Http;
 using Xunit;
 
@@ -15,7 +16,7 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void MockEntireRequestUrl()
         {
-            var context = HttpContextMockBuilder.Create(url).Build();
+            var context = new HttpContextMock().SetupUrl(url);
 
             context.Request.Host.Host.Should().Be(host);
             context.Request.QueryString.ToString().Should().Be(query);
@@ -24,7 +25,7 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void MockRequestUrlProperties()
         {
-            var context = HttpContextMockBuilder.Create().Build();
+            var context = new HttpContextMock();
 
             context.RequestMock.Mock.Setup(r => r.Scheme).Returns(scheme);
             context.RequestMock.Mock.Setup(r => r.Host).Returns(new HostString(host));

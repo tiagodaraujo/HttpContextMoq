@@ -10,7 +10,7 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void RequestService()
         {
-            var context = HttpContextMockBuilder.Create().Build();
+            var context = new HttpContextMock();
 
             context.RequestServicesMock.Mock.Setup(x => x.GetService(typeof(RequestServicesSamples))).Returns(new RequestServicesSamples());
 

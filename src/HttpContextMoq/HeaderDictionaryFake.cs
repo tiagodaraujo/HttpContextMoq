@@ -16,6 +16,11 @@ namespace HttpContextMoq
             _dictionary = new Dictionary<string, StringValues>();
         }
 
+        public HeaderDictionaryFake(IDictionary<string, StringValues> dictionary)
+        {
+            _dictionary = new Dictionary<string, StringValues>(dictionary);
+        }
+
         public StringValues this[string key]
         {
             get
