@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
@@ -36,6 +37,6 @@ namespace HttpContextMoq
 
         public IEnumerator<KeyValuePair<string, StringValues>> GetEnumerator() => _query.GetEnumerator();
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => _query.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => _query.GetEnumerator();
     }
 }

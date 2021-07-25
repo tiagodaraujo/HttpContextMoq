@@ -66,6 +66,9 @@ namespace HttpContextMoq.Tests
                     t => t.HasClaim(It.IsAny<string>(), It.IsAny<string>())
                 ),
                 new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
+                    t => t.RemoveClaim(It.IsAny<Claim>())
+                ),
+                new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(
                     t => t.TryRemoveClaim(It.IsAny<Claim>())
                 ),
                 new MethodInvokeUnitTest<ClaimsIdentityMock, ClaimsIdentity>(

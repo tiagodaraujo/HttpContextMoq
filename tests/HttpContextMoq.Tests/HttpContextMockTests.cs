@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;

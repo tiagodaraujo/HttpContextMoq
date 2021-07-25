@@ -44,10 +44,10 @@ namespace HttpContextMoq
 
         bool ICollection<KeyValuePair<object, object>>.IsReadOnly => this.Mock.Object.IsReadOnly;
 
-        bool ICollection<KeyValuePair<object, object>>.Remove(KeyValuePair<object, object> item) => this.Mock.Object.Remove(item.Key);
+        bool ICollection<KeyValuePair<object, object>>.Remove(KeyValuePair<object, object> item) => ((ICollection<KeyValuePair<object, object>>)this.Mock.Object).Remove(item);
 
         IEnumerator<KeyValuePair<object, object>> IEnumerable<KeyValuePair<object, object>>.GetEnumerator() => this.Mock.Object.GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => this.Mock.Object.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)this.Mock.Object).GetEnumerator();
     }
 }

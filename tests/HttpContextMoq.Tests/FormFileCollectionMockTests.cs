@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
@@ -32,6 +33,10 @@ namespace HttpContextMoq.Tests
                 //Methods
                 new MethodInvokeUnitTest<FormFileCollectionMock, IFormFileCollection>(
                     t => t.GetEnumerator()
+                ),
+                new ActionAndAssertUnitTest<FormFileCollectionMock>(
+                    t => ((IEnumerable)t).GetEnumerator(),
+                    t => t.Mock.As<IEnumerable>().Verify(x => x.GetEnumerator())
                 ),
                 new MethodInvokeUnitTest<FormFileCollectionMock, IFormFileCollection>(
                     t => t.GetFile(It.IsAny<string>())

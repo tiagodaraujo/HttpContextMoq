@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http.Features;
 using Moq;
@@ -37,6 +38,10 @@ namespace HttpContextMoq.Tests
                 ),
                 new MethodInvokeUnitTest<FeatureCollectionMock, IFeatureCollection>(
                     t => t.GetEnumerator()
+                ),
+                new ActionAndAssertUnitTest<FeatureCollectionMock>(
+                    t => ((IEnumerable)t).GetEnumerator(),
+                    t => t.Mock.As<IEnumerable>().Verify(x => x.GetEnumerator())
                 ),
                 new MethodInvokeUnitTest<FeatureCollectionMock, IFeatureCollection>(
                     t => t.Set<FeatureCollectionMockTests>(It.IsAny<FeatureCollectionMockTests>()), Times.Never

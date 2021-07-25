@@ -32,6 +32,6 @@ namespace HttpContextMoq
 
         public void Set<TFeature>(TFeature instance) => this.Mock.Setup(x => x.Get<TFeature>()).Returns(instance);
 
-        IEnumerator IEnumerable.GetEnumerator() => this.Mock.Object.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)this.Mock.Object).GetEnumerator();
     }
 }

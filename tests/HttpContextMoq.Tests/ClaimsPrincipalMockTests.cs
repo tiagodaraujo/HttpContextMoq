@@ -35,6 +35,7 @@ namespace HttpContextMoq.Tests
                 ),
                 new FuncAndAssertResultUnitTest<ClaimsPrincipalMock, IIdentity>(
                     t => t.IdentityMock = new ClaimsIdentityMock(),
+                    (t, v) => t.IdentityMock.Should().BeSameAs(v),
                     (t, v) => t.Identity.Should().BeSameAs(v)
                 ),
                 //Methods

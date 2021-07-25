@@ -17,7 +17,7 @@ namespace HttpContextMoq.Extensions.Tests
         public void SetupUrl_WhenUrlIsInvalid_ThrowsException(string url, Type exception)
         {
             // Arrange
-            var context = new HttpContextMockBuilder().Build();
+            var context = new HttpContextMock();
 
             // Act
             void act() => context.SetupUrl(url);
@@ -33,7 +33,7 @@ namespace HttpContextMoq.Extensions.Tests
         public void SetupUrl_WhenUrlIsValid_QueryShouldBeMocked(string url, string queryParam, string queryValue, int queryCount, bool queryExist)
         {
             // Arrange
-            var context = new HttpContextMockBuilder().Build();
+            var context = new HttpContextMock();
 
             // Act
             context.SetupUrl(url);
@@ -60,7 +60,7 @@ namespace HttpContextMoq.Extensions.Tests
         public void SetupUrl_WhenUrlIsValid_RequestShouldBeMocked(string url, bool isHttps, string scheme, string host, string path, string queryString)
         {
             // Arrange
-            var context = new HttpContextMockBuilder().Build();
+            var context = new HttpContextMock();
             var queryDictionary = QueryHelpers.ParseQuery(queryString);
 
             // Act
@@ -77,6 +77,33 @@ namespace HttpContextMoq.Extensions.Tests
             request.QueryString.ToString().Should().Be(queryString);
             request.Query.Should().BeEquivalentTo(queryDictionary);
             requestFeature.RawTarget.Should().Be(path + queryString);
+        }
+
+        [Fact]
+        public void SetupSession_WhenIfNotCalled_ShouldNotHaveSession()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(() => context.SessionMock);
+            Assert.Throws<InvalidOperationException>(() => context.Session);
+            context.Features.Get<ISessionFeature>().Should().BeNull();
+        }
+
+        [Fact]
+        public void SetupSession_WhenIfCalled_ShouldHaveSession()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+
+            // Act
+            context.SetupSession();
+
+            // Assert
+            context.SessionMock.Should().NotBeNull();
+            context.Session.Should().NotBeNull();
+            context.Features.Get<ISessionFeature>().Should().NotBeNull();
         }
     }
 }

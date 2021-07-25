@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -47,6 +48,10 @@ namespace HttpContextMoq.Tests
                 ),
                 new MethodInvokeUnitTest<FormCollectionMock, IFormCollection>(
                     t => t.GetEnumerator()
+                ),
+                new ActionAndAssertUnitTest<FormCollectionMock>(
+                    t => ((IEnumerable)t).GetEnumerator(),
+                    t => t.Mock.As<IEnumerable>().Verify(x => x.GetEnumerator())
                 ),
                 new MethodInvokeUnitTest<FormCollectionMock, IFormCollection>(
                     t => t.TryGetValue(Fakes.String, out Fakes.OutStringValues)

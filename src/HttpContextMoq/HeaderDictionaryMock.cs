@@ -56,6 +56,6 @@ namespace HttpContextMoq
 
         public bool TryGetValue(string key, out StringValues value) => this.Mock.Object.TryGetValue(key, out value);
 
-        IEnumerator IEnumerable.GetEnumerator() => this.Mock.Object.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)this.Mock.Object).GetEnumerator();
     }
 }

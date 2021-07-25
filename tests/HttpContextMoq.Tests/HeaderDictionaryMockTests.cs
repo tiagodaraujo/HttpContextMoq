@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
@@ -62,6 +63,10 @@ namespace HttpContextMoq.Tests
                 ),
                 new MethodInvokeUnitTest<HeaderDictionaryMock, IHeaderDictionary>(
                     t => t.GetEnumerator()
+                ),
+                new ActionAndAssertUnitTest<HeaderDictionaryMock>(
+                    t => ((IEnumerable)t).GetEnumerator(),
+                    t => t.Mock.As<IEnumerable>().Verify(x => x.GetEnumerator())
                 ),
                 new MethodInvokeUnitTest<HeaderDictionaryMock, IHeaderDictionary>(
                     t => t.Remove(Fakes.String)

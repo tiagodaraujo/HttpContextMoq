@@ -27,6 +27,6 @@ namespace HttpContextMoq
 
         public IReadOnlyList<IFormFile> GetFiles(string name) => this.Mock.Object.GetFiles(name);
 
-        IEnumerator IEnumerable.GetEnumerator() => this.Mock.Object.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)this.Mock.Object).GetEnumerator();
     }
 }
