@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
 using Xunit;
 
 namespace HttpContextMoq.Extensions.Tests
@@ -77,6 +79,102 @@ namespace HttpContextMoq.Extensions.Tests
             request.QueryString.ToString().Should().Be(queryString);
             request.Query.Should().BeEquivalentTo(queryDictionary);
             requestFeature.RawTarget.Should().Be(path + queryString);
+        }
+
+        [Fact]
+        public void SetupRequestHeaders_WhenEmpty_ShouldNoHeaders()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+            var headers = new Dictionary<string, StringValues>();
+
+            // Act
+            context.SetupRequestHeaders(headers);
+
+            // Assert
+            context.Request.Headers.Count.Should().Be(0);
+            context.Request.Headers.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void SetupRequestHeaders_WhenHaveHeaders_ShouldHaveHeaders()
+        {
+            // Arrange
+            const string header1 = "header1", header2 = "header2", value1 = "value1", value2 = "value2";
+            var context = new HttpContextMock();
+            var headers = new Dictionary<string, StringValues> {
+                { header1, value1 },
+                { header2, value2 }
+            };
+
+            // Act
+            context.SetupRequestHeaders(headers);
+
+            // Assert
+            context.Request.Headers.Count.Should().Be(headers.Count);
+            context.Request.Headers.Should().HaveCount(headers.Count);
+            context.Request.Headers.Should().BeEquivalentTo(headers);
+            foreach (var item in headers)
+            {
+                context.Request.Headers[item.Key].Should().BeEquivalentTo(item.Value);
+                context.Request.Headers.ContainsKey(item.Key).Should().BeTrue();
+                context.Request.Headers.Contains(new KeyValuePair<string, StringValues>(item.Key, item.Value)).Should().BeTrue();
+                context.Request.Headers.TryGetValue(item.Key, out var value).Should().BeTrue();
+                value.Should().BeEquivalentTo(item.Value);
+            }
+
+            context.Request.Headers["notexist"].Should().BeEquivalentTo(StringValues.Empty);
+            context.Request.Headers.ContainsKey("notexist").Should().BeFalse();
+            context.Request.Headers.Contains(new KeyValuePair<string, StringValues>("notexist", "notexist")).Should().BeFalse();
+            context.Request.Headers.TryGetValue("notexist", out var valueNotExist).Should().BeFalse();
+            valueNotExist.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void SetupRequestCookies_WhenEmpty_ShouldNoCookies()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+            var headers = new Dictionary<string, string>();
+
+            // Act
+            context.SetupRequestCookies(headers);
+
+            // Assert
+            context.Request.Cookies.Count.Should().Be(0);
+            context.Request.Cookies.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void SetupRequestCookies_WhenHaveCookies_ShouldHaveCookies()
+        {
+            // Arrange
+            const string cookie1 = "cookie1", cookie2 = "cookie2", value1 = "value1", value2 = "value2";
+            var context = new HttpContextMock();
+            var cookies = new Dictionary<string, string> {
+                { cookie1, value1 },
+                { cookie2, value2 }
+            };
+
+            // Act
+            context.SetupRequestCookies(cookies);
+
+            // Assert
+            context.Request.Cookies.Count.Should().Be(cookies.Count);
+            context.Request.Cookies.Should().HaveCount(cookies.Count);
+            context.Request.Cookies.Should().BeEquivalentTo(cookies);
+            foreach (var item in cookies)
+            {
+                context.Request.Cookies.ContainsKey(item.Key).Should().BeTrue();
+                context.Request.Cookies.TryGetValue(item.Key, out var value).Should().BeTrue();
+                context.Request.Cookies[item.Key].Should().BeEquivalentTo(item.Value);
+                value.Should().BeEquivalentTo(item.Value);
+            }
+
+            context.Request.Cookies["notexist"].Should().BeEquivalentTo(null);
+            context.Request.Cookies.ContainsKey("notexist").Should().BeFalse();
+            context.Request.Cookies.TryGetValue("notexist", out var valueNotExist).Should().BeFalse();
+            valueNotExist.Should().BeNull();
         }
 
         [Fact]

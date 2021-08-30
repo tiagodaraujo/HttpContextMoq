@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
 using Moq;
 
 namespace HttpContextMoq.Extensions
@@ -35,6 +37,20 @@ namespace HttpContextMoq.Extensions
             var requestFeature = new Mock<IHttpRequestFeature>();
             requestFeature.Setup(x => x.RawTarget).Returns(uri.PathAndQuery);
             httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<IHttpRequestFeature>()).Returns(requestFeature.Object);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupRequestHeaders(this HttpContextMock httpContextMock, IDictionary<string, StringValues> headers)
+        {
+            httpContextMock.RequestMock.SetHeaders(new HeaderDictionaryFake(headers));
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupRequestCookies(this HttpContextMock httpContextMock, IDictionary<string, string> cookies)
+        {
+            httpContextMock.RequestMock.Cookies = new RequestCookieCollectionFake(cookies);
 
             return httpContextMock;
         }

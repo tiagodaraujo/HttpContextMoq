@@ -42,8 +42,7 @@ namespace HttpContextMoq
             get => _headers as HeaderDictionaryMock;
             set
             {
-                this._headers = value;
-                this.Mocks.Add(value);
+                SetHeaders(value);
             }
         }
 
@@ -156,5 +155,11 @@ namespace HttpContextMoq
         }
 
         public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = default) => this.Mock.Object.ReadFormAsync(cancellationToken);
+
+        internal void SetHeaders(IHeaderDictionary headers)
+        {
+            this._headers = headers;
+            this.Mocks.Add(headers);
+        }
     }
 }
