@@ -63,5 +63,19 @@ namespace HttpContextMoq.Extensions
 
             return httpContextMock;
         }
+
+        public static HttpContextMock SetupRequestService<TService>(this HttpContextMock httpContextMock, TService instance)
+        {
+            httpContextMock.RequestServicesMock.Mock.Setup(x => x.GetService(typeof(TService))).Returns(instance);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupRequestService<TService>(this HttpContextMock httpContextMock, Func<TService> factory)
+        {
+            httpContextMock.RequestServicesMock.Mock.Setup(x => x.GetService(typeof(TService))).Returns(() => (object)factory());
+
+            return httpContextMock;
+        }
     }
 }
