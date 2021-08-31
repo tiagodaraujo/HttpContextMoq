@@ -16,8 +16,10 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void MockEntireRequestUrl()
         {
+            // Act
             var context = new HttpContextMock().SetupUrl(url);
 
+            // Assert
             context.Request.Host.Host.Should().Be(host);
             context.Request.QueryString.ToString().Should().Be(query);
         }
@@ -25,11 +27,14 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void MockRequestUrlProperties()
         {
+            // Arrange
             var context = new HttpContextMock();
 
+            // Act
             context.RequestMock.Mock.Setup(r => r.Scheme).Returns(scheme);
             context.RequestMock.Mock.Setup(r => r.Host).Returns(new HostString(host));
 
+            // Assert
             context.Request.Scheme.Should().Be(scheme);
             context.Request.Host.ToString().Should().Be(host);
         }

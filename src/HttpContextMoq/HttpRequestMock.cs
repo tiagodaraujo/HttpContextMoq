@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using HttpContextMoq.Generic;
 using Microsoft.AspNetCore.Http;
 using Moq;
+#if NETCOREAPP
+using Microsoft.AspNetCore.Routing;
+#endif
 
 namespace HttpContextMoq
 {
@@ -21,6 +24,9 @@ namespace HttpContextMoq
             this.QueryMock = new QueryCollectionMock();
             this.CookiesMock = new RequestCookieCollectionMock();
             this.FormMock = new FormCollectionMock();
+#if NETCOREAPP
+            this.RouteValues = new RouteValueDictionary();
+#endif
         }
 
         public Mock<HttpRequest> Mock { get; }
@@ -153,6 +159,10 @@ namespace HttpContextMoq
             get => this.Mock.Object.Scheme;
             set => this.Mock.Object.Scheme = value;
         }
+
+#if NETCOREAPP
+        public override RouteValueDictionary RouteValues { get; set; }
+#endif
 
         public override Task<IFormCollection> ReadFormAsync(CancellationToken cancellationToken = default) => this.Mock.Object.ReadFormAsync(cancellationToken);
 

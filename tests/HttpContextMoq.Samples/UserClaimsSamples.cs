@@ -12,10 +12,13 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void User()
         {
+            // Arrange
             var context = new HttpContextMock();
 
+            // Act
             context.UserMock.Mock.Setup(u => u.HasClaim(type, value)).Returns(true);
 
+            // Assert
             context.User.HasClaim(type, value).Should().BeTrue();
             context.User.HasClaim(secondType, value).Should().BeFalse();
         }

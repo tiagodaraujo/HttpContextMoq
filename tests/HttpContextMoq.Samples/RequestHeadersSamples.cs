@@ -13,10 +13,12 @@ namespace HttpContextMoq.Samples
         [Fact]
         public void MockEntireRequestHeaders()
         {
+            // Act
             var context = new HttpContextMock().SetupRequestHeaders(new Dictionary<string, StringValues> {
                 { header1, value1 }
             });
 
+            // Assert
             context.Request.Headers.ContainsKey(header1).Should().BeTrue();
             context.Request.Headers[header1].Should().BeEquivalentTo(value1);
         }

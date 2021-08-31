@@ -2,6 +2,7 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Moq;
 using Xunit;
 
@@ -33,7 +34,8 @@ namespace HttpContextMoq.Tests
                     t => t.CookiesMock.Should().NotBeNull(),
                     t => t.Mocks.Get<RequestCookieCollectionMock>().Should().NotBeNull(),
                     t => t.FormMock.Should().NotBeNull(),
-                    t => t.Mocks.Get<FormCollectionMock>().Should().NotBeNull()
+                    t => t.Mocks.Get<FormCollectionMock>().Should().NotBeNull(),
+                    t => t.RouteValues.Should().NotBeNull()
                 ),
                 // HttpContext
                 new FuncAndAssertResultUnitTest<HttpRequestMock, HttpContextMock>(
@@ -144,6 +146,11 @@ namespace HttpContextMoq.Tests
                 new PropertyGetSetUnitTest<HttpRequestMock, HttpRequest, string>(
                     t => t.Scheme,
                     t => t.Scheme = Fakes.String
+                ),
+                new PropertyGetSetUnitTest<HttpRequestMock, HttpRequest, RouteValueDictionary>(
+                    t => t.RouteValues,
+                    t => t.RouteValues = new RouteValueDictionary(),
+                    Times.Never
                 ),
                 //Methods
                 new MethodInvokeUnitTest<HttpRequestMock, HttpRequest>(
