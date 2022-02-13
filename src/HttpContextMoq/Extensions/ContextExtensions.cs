@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.WebUtilities;
@@ -37,6 +38,13 @@ namespace HttpContextMoq.Extensions
             var requestFeature = new Mock<IHttpRequestFeature>();
             requestFeature.Setup(x => x.RawTarget).Returns(uri.PathAndQuery);
             httpContextMock.FeaturesMock.Mock.Setup(x => x.Get<IHttpRequestFeature>()).Returns(requestFeature.Object);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupRequestBody(this HttpContextMock httpContextMock, Stream stream)
+        {
+            httpContextMock.RequestMock.Mock.Setup(x => x.Body).Returns(stream);
 
             return httpContextMock;
         }
