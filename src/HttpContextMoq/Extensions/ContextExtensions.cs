@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.WebUtilities;
@@ -42,9 +43,30 @@ namespace HttpContextMoq.Extensions
             return httpContextMock;
         }
 
+        public static HttpContextMock SetupRequestMethod(this HttpContextMock httpContextMock, string method)
+        {
+            httpContextMock.RequestMock.Mock.Setup(x => x.Method).Returns(method);
+
+            return httpContextMock;
+        }
+
         public static HttpContextMock SetupRequestBody(this HttpContextMock httpContextMock, Stream stream)
         {
             httpContextMock.RequestMock.Mock.Setup(x => x.Body).Returns(stream);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupRequestContentType(this HttpContextMock httpContextMock, string contentType)
+        {
+            httpContextMock.RequestMock.Mock.Setup(x => x.ContentType).Returns(contentType);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupRequestContentLength(this HttpContextMock httpContextMock, long? contentLength)
+        {
+            httpContextMock.RequestMock.Mock.Setup(x => x.ContentLength).Returns(contentLength);
 
             return httpContextMock;
         }
@@ -59,6 +81,44 @@ namespace HttpContextMoq.Extensions
         public static HttpContextMock SetupRequestCookies(this HttpContextMock httpContextMock, IDictionary<string, string> cookies)
         {
             httpContextMock.RequestMock.Cookies = new RequestCookieCollectionFake(cookies);
+
+            return httpContextMock;
+        }
+
+
+        public static HttpContextMock SetupResponseStatusCode(this HttpContextMock httpContextMock, HttpStatusCode statusCode) => SetupResponseStatusCode(httpContextMock, (int) statusCode);
+
+        public static HttpContextMock SetupResponseStatusCode(this HttpContextMock httpContextMock, int statusCode)
+        {
+            httpContextMock.ResponseMock.Mock.Setup(x => x.StatusCode).Returns(statusCode);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupResponseBody(this HttpContextMock httpContextMock, Stream stream)
+        {
+            httpContextMock.ResponseMock.Mock.Setup(x => x.Body).Returns(stream);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupResponseContentType(this HttpContextMock httpContextMock, string contentType)
+        {
+            httpContextMock.ResponseMock.Mock.Setup(x => x.ContentType).Returns(contentType);
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupResponseHeaders(this HttpContextMock httpContextMock, IDictionary<string, StringValues> headers)
+        {
+            httpContextMock.ResponseMock.SetHeaders(new HeaderDictionaryFake(headers));
+
+            return httpContextMock;
+        }
+
+        public static HttpContextMock SetupResponseContentLength(this HttpContextMock httpContextMock, long? contentLength)
+        {
+            httpContextMock.ResponseMock.Mock.Setup(x => x.ContentLength).Returns(contentLength);
 
             return httpContextMock;
         }

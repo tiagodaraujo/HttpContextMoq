@@ -88,6 +88,12 @@ namespace HttpContextMoq
             set => this.Mock.Object.StatusCode = value;
         }
 
+        internal void SetHeaders(IHeaderDictionary headers)
+        {
+            this._headers = headers;
+            this.Mocks.Add(headers);
+        }
+
         public override void OnCompleted(Func<object, Task> callback, object state) => this.Mock.Object.OnCompleted(callback, state);
 
         public override void OnStarting(Func<object, Task> callback, object state) => this.Mock.Object.OnStarting(callback, state);
