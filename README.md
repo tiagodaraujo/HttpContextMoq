@@ -4,7 +4,45 @@ Easy mocking for ASP.NET Core HttpContext.
 
 HttpContextMoq is an implementation of `AspNetCore.Http.HttpContext` that stores a Mock<HttpContext> instance and works as a proxy for the real Mock.
 
-## Getting Started
+## Instalation
+
+## Usage
+
+Basic GET request:
+```csharp
+
+var context = new HttpContextMock()
+    .SetupUrl("http://localhost:8000/path")
+    .SetupRequestMethod("GET");
+```
+
+POST request (with body):
+
+```csharp
+var data = Encoding.UTF8.GetBytes("{\"Foo\":\"Bar\"");
+
+var context = new HttpContextMock()
+    .SetupUrl("http://localhost:8000/path")
+    .SetupRequestMethod("POST")
+    .SetupRequestContentType("application/json")
+    .SetupRequestBody(new MemoryStream(data))
+    .SetupRequestContentLength(data.Length);
+```
+
+Request/Response pair, usefull for testing Action Filters:
+
+```csharp
+var data = Encoding.UTF8.GetBytes("{\"Foo\":\"Bar\"");
+
+var context = new HttpContextMock()
+    .SetupUrl("http://localhost:8000/path")
+    .SetupRequestMethod("GET")
+    .SetupResponseContentType("application/json")
+    .SetupResponseBody(new MemoryStream(data))
+    .SetupResponseContentLength(data.Length);
+```
+
+## Development
 
 Open the solution `src\HttpContextMoq.sln` on Visual Studio.
 
