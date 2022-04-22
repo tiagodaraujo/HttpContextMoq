@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.0;netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.0;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
     <AssemblyName>HttpContextMoq</AssemblyName>
     <RootNamespace>HttpContextMoq</RootNamespace>
     <AssetTargetFallback>
@@ -18,6 +18,7 @@
     <IsPackable>True</IsPackable>
     <PackageId>HttpContextMoq</PackageId>
     <Title>HttpContextMoq: Easy mocking for ASP.NET Core HttpContext</Title>
+    <Description>HttpContextMoq is an implementation of AspNetCore.Http.HttpContext that stores a Mock instance and works as a proxy for the real Mock.</Description>
     <Authors>Tiago Araújo</Authors>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/tiagodaraujo/httpcontextmoq</PackageProjectUrl>
@@ -27,7 +28,7 @@
     <Version>1.2.2</Version>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' or '$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' or '$(TargetFramework)' == 'netcoreapp3.1' or '$(TargetFramework)' == 'net5.0' or '$(TargetFramework)' == 'net6.0' ">
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
