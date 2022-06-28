@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
@@ -175,6 +177,151 @@ namespace HttpContextMoq.Extensions.Tests
             context.Request.Cookies.ContainsKey("notexist").Should().BeFalse();
             context.Request.Cookies.TryGetValue("notexist", out var valueNotExist).Should().BeFalse();
             valueNotExist.Should().BeNull();
+        }
+
+        [Fact]
+        public void SetupRequestMethod_WhenValue_ShouldSetMethod()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+            var headers = new Dictionary<string, StringValues>();
+
+            // Act
+            context.SetupRequestMethod(HttpMethods.Post);
+
+            // Assert
+            context.Request.Method.Should().Be(HttpMethods.Post);
+        }
+
+        [Fact]
+        public void SetupRequestContentLength_WhenValue_ShouldSetContentLength()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+
+            // Act
+            context.SetupRequestContentLength(123);
+
+            // Assert
+            context.Request.ContentLength.Should().Be(123);
+        }
+
+        [Fact]
+        public void SetupRequestContentType_WhenValue_ShouldSetContentType()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+
+            // Act
+            context.SetupRequestContentType("application/json");
+
+            // Assert
+            context.Request.ContentType.Should().Be("application/json");
+        }
+
+        [Fact]
+        public void SetupResponseHeaders_WhenEmpty_ShouldNoHeaders()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+            var headers = new Dictionary<string, StringValues>();
+
+            // Act
+            context.SetupResponseHeaders(headers);
+
+            // Assert
+            context.Response.Headers.Count.Should().Be(0);
+            context.Response.Headers.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void SetupResponseHeaders_WhenHaveHeaders_ShouldHaveHeaders()
+        {
+            // Arrange
+            const string header1 = "header1", header2 = "header2", value1 = "value1", value2 = "value2";
+            var context = new HttpContextMock();
+            var headers = new Dictionary<string, StringValues> {
+                { header1, value1 },
+                { header2, value2 }
+            };
+
+            // Act
+            context.SetupResponseHeaders(headers);
+
+            // Assert
+            context.Response.Headers.Count.Should().Be(headers.Count);
+            context.Response.Headers.Should().HaveCount(headers.Count);
+            context.Response.Headers.Should().BeEquivalentTo(headers);
+            foreach (var item in headers)
+            {
+                context.Response.Headers[item.Key].Should().BeEquivalentTo(item.Value);
+                context.Response.Headers.ContainsKey(item.Key).Should().BeTrue();
+                context.Response.Headers.Contains(new KeyValuePair<string, StringValues>(item.Key, item.Value)).Should().BeTrue();
+                context.Response.Headers.TryGetValue(item.Key, out var value).Should().BeTrue();
+                value.Should().BeEquivalentTo(item.Value);
+            }
+
+            context.Response.Headers["notexist"].Should().BeEquivalentTo(StringValues.Empty);
+            context.Response.Headers.ContainsKey("notexist").Should().BeFalse();
+            context.Response.Headers.Contains(new KeyValuePair<string, StringValues>("notexist", "notexist")).Should().BeFalse();
+            context.Response.Headers.TryGetValue("notexist", out var valueNotExist).Should().BeFalse();
+            valueNotExist.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void SetupResponseContentLength_WhenValue_ShouldSetContentLength()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+
+            // Act
+            context.SetupResponseContentLength(123);
+
+            // Assert
+            context.Response.ContentLength.Should().Be(123);
+        }
+
+        [Fact]
+        public void SetupResponseContentType_WhenValue_ShouldSetContentType()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+
+            // Act
+            context.SetupResponseContentType("application/json");
+
+            // Assert
+            context.Response.ContentType.Should().Be("application/json");
+        }
+
+        [Fact]
+        public void SetupResponseStatusCode_WhenValue_ShouldSetStatusCode()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+
+            // Act
+            context.SetupResponseStatusCode(System.Net.HttpStatusCode.PartialContent);
+
+            // Assert
+            context.Response.StatusCode.Should().Be(206);
+        }
+
+        [Fact]
+        public void SetupResponseBody_WhenValue_ShouldSetBody()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+            var body = new MemoryStream(new byte[] { 0x1, 0x2, 0x3 });
+
+            // Act
+            context.SetupResponseBody(body);
+
+            // Assert
+            var data = new MemoryStream();
+            context.Response.Body.CopyTo(data);
+
+            data.ToArray().Should().BeEquivalentTo(0x1, 0x2, 0x3);
         }
 
         [Fact]
