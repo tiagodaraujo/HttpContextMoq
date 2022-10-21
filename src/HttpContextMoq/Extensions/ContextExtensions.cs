@@ -16,6 +16,7 @@ namespace HttpContextMoq.Extensions
         {
             var uri = new Uri(url);
 
+            httpContextMock.RequestMock.Mock.Setup(x => x.Protocol).Returns("HTTP/1.1");
             httpContextMock.RequestMock.Mock.Setup(x => x.IsHttps).Returns(uri.Scheme == "https");
             httpContextMock.RequestMock.Mock.Setup(x => x.Scheme).Returns(uri.Scheme);
             if ((uri.Scheme == "https" && uri.Port != 443) || (uri.Scheme == "http" && uri.Port != 80))
