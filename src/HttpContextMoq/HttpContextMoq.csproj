@@ -20,7 +20,8 @@
 		<Title>HttpContextMoq: Easy mocking for ASP.NET Core HttpContext</Title>
 		<Description>HttpContextMoq is an implementation of AspNetCore.Http.HttpContext that stores a Mock instance and works as a proxy for the real Mock.</Description>
 		<Authors>Tiago Araújo</Authors>
-		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/tiagodaraujo/httpcontextmoq</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/tiagodaraujo/httpcontextmoq</RepositoryUrl>
 		<PackageTags>aspnetcore httpcontext moq mocking mocks tdd unittesting unittest</PackageTags>
