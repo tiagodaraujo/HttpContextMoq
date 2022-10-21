@@ -25,7 +25,7 @@ namespace HttpContextMoq.Tests
                 //Properties
                 new PropertyGetSetUnitTest<ConnectionInfoMock, ConnectionInfo, X509Certificate2>(
                     t => t.ClientCertificate,
-                    t => t.ClientCertificate = new X509Certificate2()
+                    t => t.ClientCertificate = null
                 ),
                 new PropertyGetSetUnitTest<ConnectionInfoMock, ConnectionInfo, string>(
                     t => t.Id,
