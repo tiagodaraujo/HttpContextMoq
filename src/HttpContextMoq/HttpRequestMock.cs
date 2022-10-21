@@ -43,9 +43,9 @@ namespace HttpContextMoq
             }
         }
 
-        public HeaderDictionaryMock HeadersMock
+        public IHeaderDictionaryMock HeadersMock
         {
-            get => _headers as HeaderDictionaryMock;
+            get => _headers as IHeaderDictionaryMock;
             set
             {
                 SetHeaders(value);

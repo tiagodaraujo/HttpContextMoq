@@ -83,7 +83,7 @@ namespace HttpContextMoq.Tests
                     t => t.Connection, Times.Never
                 ),
                 // Items
-                new FuncAndAssertResultUnitTest<HttpContextMock, ItemsDictionaryMock>(
+                new FuncAndAssertResultUnitTest<HttpContextMock, IItemsDictionaryMock>(
                     t => t.ItemsMock = new ItemsDictionaryMock(),
                     (t, v) => t.ItemsMock.Should().BeSameAs(v),
                     (t, v) => t.Items.Should().BeSameAs(v),

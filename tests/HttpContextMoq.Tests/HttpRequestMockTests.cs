@@ -10,8 +10,6 @@ namespace HttpContextMoq.Tests
 {
     public class HttpRequestMockTests
     {
-        //public static HttpContextMock httpContextMock = ;
-
         [Theory]
         [MemberData(nameof(Data))]
         public void HttpRequestMock_WhenRun_AssertTrue(UnitTest<HttpRequestMock> unitTest)
@@ -45,7 +43,7 @@ namespace HttpContextMoq.Tests
                     (t, v) => t.Mocks.Get<HttpContextMock>().Should().BeSameAs(v)
                 ),
                 // Headers
-                new FuncAndAssertResultUnitTest<HttpRequestMock, HeaderDictionaryMock>(
+                new FuncAndAssertResultUnitTest<HttpRequestMock, IHeaderDictionaryMock>(
                     t => t.HeadersMock = new HeaderDictionaryMock(),
                     (t, v) => t.HeadersMock.Should().BeSameAs(v),
                     (t, v) => t.Headers.Should().BeSameAs(v),

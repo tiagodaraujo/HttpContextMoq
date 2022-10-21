@@ -36,9 +36,9 @@ namespace HttpContextMoq
             }
         }
 
-        public HeaderDictionaryMock HeadersMock
+        public IHeaderDictionaryMock HeadersMock
         {
-            get => _headers as HeaderDictionaryMock;
+            get => _headers as IHeaderDictionaryMock;
             set
             {
                 this._headers = value;
@@ -94,10 +94,18 @@ namespace HttpContextMoq
             this.Mocks.Add(headers);
         }
 
+        public override void OnCompleted(Func<Task> callback) => this.Mock.Object.OnCompleted(callback);
+
         public override void OnCompleted(Func<object, Task> callback, object state) => this.Mock.Object.OnCompleted(callback, state);
+
+        public override void OnStarting(Func<Task> callback) => this.Mock.Object.OnStarting(callback);
 
         public override void OnStarting(Func<object, Task> callback, object state) => this.Mock.Object.OnStarting(callback, state);
 
+        public override void Redirect(string location) => this.Mock.Object.Redirect(location);
+
         public override void Redirect(string location, bool permanent) => this.Mock.Object.Redirect(location, permanent);
+
+        public override void RegisterForDispose(IDisposable disposable) => this.Mock.Object.RegisterForDispose(disposable);
     }
 }

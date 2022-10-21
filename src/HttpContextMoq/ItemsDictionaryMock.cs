@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using HttpContextMoq.Generic;
 using Moq;
 
 namespace HttpContextMoq
 {
-    public class ItemsDictionaryMock : IDictionary<object, object>, IContextMock<IDictionary<object, object>>
+    public class ItemsDictionaryMock : IItemsDictionaryMock
     {
         public ItemsDictionaryMock()
         {

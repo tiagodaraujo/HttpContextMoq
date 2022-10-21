@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
+using Moq;
 
 namespace HttpContextMoq
 {
-    public class HeaderDictionaryFake : IHeaderDictionary
+    public class HeaderDictionaryFake : IHeaderDictionaryMock
     {
         private readonly Dictionary<string, StringValues> _dictionary;
 
@@ -86,6 +87,8 @@ namespace HttpContextMoq
         public int Count => _dictionary.Count;
 
         public bool IsReadOnly { get; set; }
+
+        public Mock<IHeaderDictionary> Mock => throw new InvalidOperationException();
 
         public void Add(string key, StringValues value)
         {

@@ -41,7 +41,7 @@ namespace HttpContextMoq.Tests
                     (t, v) => t.Mocks.Get<HttpContextMock>().Should().BeSameAs(v)
                 ),
                 // Headers
-                new FuncAndAssertResultUnitTest<HttpResponseMock, HeaderDictionaryMock>(
+                new FuncAndAssertResultUnitTest<HttpResponseMock, IHeaderDictionaryMock>(
                     t => t.HeadersMock = new HeaderDictionaryMock(),
                     (t, v) => t.HeadersMock.Should().BeSameAs(v),
                     (t, v) => t.Headers.Should().BeSameAs(v),
@@ -82,14 +82,26 @@ namespace HttpContextMoq.Tests
                 ),
                 //Methods
                 new MethodInvokeUnitTest<HttpResponseMock, HttpResponse>(
+                    t => t.OnCompleted(It.IsAny<Func<Task>>())
+                ),
+                new MethodInvokeUnitTest<HttpResponseMock, HttpResponse>(
                     t => t.OnCompleted(It.IsAny<Func<object, Task>>(), It.IsAny<object>())
+                ),
+                new MethodInvokeUnitTest<HttpResponseMock, HttpResponse>(
+                    t => t.OnStarting(It.IsAny<Func<Task>>())
                 ),
                 new MethodInvokeUnitTest<HttpResponseMock, HttpResponse>(
                     t => t.OnStarting(It.IsAny<Func<object, Task>>(), It.IsAny<object>())
                 ),
                 new MethodInvokeUnitTest<HttpResponseMock, HttpResponse>(
+                    t => t.Redirect(Fakes.String)
+                ),
+                new MethodInvokeUnitTest<HttpResponseMock, HttpResponse>(
                     t => t.Redirect(Fakes.String, Fakes.Bool)
                 ),
+                new MethodInvokeUnitTest<HttpResponseMock, HttpResponse>(
+                    t => t.RegisterForDispose(It.IsAny<IDisposable>())
+                )
             }.ToData();
     }
 }

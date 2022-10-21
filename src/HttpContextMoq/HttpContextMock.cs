@@ -77,9 +77,9 @@ namespace HttpContextMoq
             }
         }
 
-        public ItemsDictionaryMock ItemsMock
+        public IItemsDictionaryMock ItemsMock
         {
-            get => this.Items as ItemsDictionaryMock;
+            get => this.Items as IItemsDictionaryMock;
             set
             {
                 this.Items = value;

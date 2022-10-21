@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Moq;
 
 namespace HttpContextMoq
 {
-    public class ItemsDictionaryFake : IDictionary<object, object>
+    public class ItemsDictionaryFake : IItemsDictionaryMock
     {
         private IDictionary<object, object> _items = new Dictionary<object, object>();
 
@@ -47,6 +49,8 @@ namespace HttpContextMoq
         int ICollection<KeyValuePair<object, object>>.Count => _items.Count;
 
         bool ICollection<KeyValuePair<object, object>>.IsReadOnly => _items.IsReadOnly;
+
+        public Mock<IDictionary<object, object>> Mock => throw new InvalidOperationException();
 
         bool ICollection<KeyValuePair<object, object>>.Remove(KeyValuePair<object, object> item)
         {
