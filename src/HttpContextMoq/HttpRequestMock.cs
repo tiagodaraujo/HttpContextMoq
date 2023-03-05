@@ -82,6 +82,15 @@ namespace HttpContextMoq
             }
         }
 
+        public FormCollectionFake FormFake
+        {
+            get => this.Form as FormCollectionFake;
+            set
+            {
+                this.Form = value;
+            }
+        }
+
         public override Stream Body
         {
             get => this.Mock.Object.Body;

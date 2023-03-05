@@ -6,20 +6,36 @@ using Microsoft.AspNetCore.Routing;
 using Moq;
 using Xunit;
 
-namespace HttpContextMoq.Tests
-{
-    public class HttpRequestMockTests
-    {
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void HttpRequestMock_WhenRun_AssertTrue(UnitTest<HttpRequestMock> unitTest)
-        {
-            unitTest.Run(() => new HttpRequestMock(new HttpContextMock()));
-        }
+namespace HttpContextMoq.Tests;
 
-        public static IEnumerable<object[]> Data =>
-            new UnitTest<HttpRequestMock>[]
-            {
+public class HttpRequestMockTests
+{
+    [Theory]
+    [MemberData(nameof(Data))]
+    public void HttpRequestMock_WhenRun_AssertTrue(UnitTest<HttpRequestMock> unitTest)
+    {
+        unitTest.Run(() => new HttpRequestMock(new HttpContextMock()));
+    }
+
+    [Fact]
+    public void Form_WhenSetFormCollectionFake_ExceptFormFakeAndNullFormMock()
+    {
+        // Assert
+        var target = new HttpRequestMock(new HttpContextMock());
+
+        // Act
+        target.FormFake = new FormCollectionFake();
+
+        // Assert
+        target.Form.Should().NotBeNull();
+        target.Form.Should().BeOfType<FormCollectionFake>();
+        target.FormMock.Should().BeNull();
+        target.FormFake.Should().NotBeNull();
+    }
+
+    public static IEnumerable<object[]> Data =>
+        new UnitTest<HttpRequestMock>[]
+        {
                 //Class
                 new ContextMockUnitTest<HttpRequestMock, HttpRequest>(),
                 new AssertUnitTest<HttpRequestMock>(
@@ -154,6 +170,5 @@ namespace HttpContextMoq.Tests
                 new MethodInvokeUnitTest<HttpRequestMock, HttpRequest>(
                     t => t.ReadFormAsync(Fakes.CancellationToken)
                 ),
-            }.ToData();
-    }
+        }.ToData();
 }
