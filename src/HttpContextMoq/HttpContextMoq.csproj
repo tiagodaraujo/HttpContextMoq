@@ -24,7 +24,7 @@
 		<RepositoryUrl>https://github.com/tiagodaraujo/httpcontextmoq</RepositoryUrl>
 		<PackageTags>aspnetcore httpcontext moq mocking mocks tdd unittesting unittest</PackageTags>
 		<IncludeSymbols>false</IncludeSymbols>
-		<Version>1.5.0</Version>
+		<Version>1.6.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
