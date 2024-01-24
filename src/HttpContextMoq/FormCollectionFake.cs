@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -12,14 +13,14 @@ public class FormCollectionFake : IFormCollection
 
     public FormCollectionFake()
     {
-        _fields = new Dictionary<string, StringValues>();
+        _fields = new(StringComparer.OrdinalIgnoreCase);
         _files = new FormFileCollectionFake();
     }
 
     public FormCollectionFake(IDictionary<string, StringValues> fields, IFormFileCollection files = null)
     {
-        _fields = new Dictionary<string, StringValues>(fields);
-        _files = files == null ? new FormFileCollectionFake() : files;
+        _fields = new(fields, StringComparer.OrdinalIgnoreCase);
+        _files = files ?? new FormFileCollectionFake();
     }
 
     public StringValues this[string key] => _fields[key];

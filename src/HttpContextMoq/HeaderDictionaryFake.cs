@@ -6,168 +6,167 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 using Moq;
 
-namespace HttpContextMoq
+namespace HttpContextMoq;
+
+public class HeaderDictionaryFake : IHeaderDictionaryMock
 {
-    public class HeaderDictionaryFake : IHeaderDictionaryMock
+    private readonly Dictionary<string, StringValues> _dictionary;
+
+    public HeaderDictionaryFake()
     {
-        private readonly Dictionary<string, StringValues> _dictionary;
+        _dictionary = new(StringComparer.OrdinalIgnoreCase);
+    }
 
-        public HeaderDictionaryFake()
+    public HeaderDictionaryFake(IDictionary<string, StringValues> dictionary)
+    {
+        _dictionary = new(dictionary, StringComparer.OrdinalIgnoreCase);
+    }
+
+    public StringValues this[string key]
+    {
+        get
         {
-            _dictionary = new Dictionary<string, StringValues>();
-        }
-
-        public HeaderDictionaryFake(IDictionary<string, StringValues> dictionary)
-        {
-            _dictionary = new Dictionary<string, StringValues>(dictionary);
-        }
-
-        public StringValues this[string key]
-        {
-            get
+            if (TryGetValue(key, out var value))
             {
-                if (TryGetValue(key, out var value))
-                {
-                    return value;
-                }
-
-                return StringValues.Empty;
+                return value;
             }
-            set
-            {
-                if (key == null)
-                {
-                    throw new ArgumentNullException(nameof(key));
-                }
 
-                ThrowIfReadOnly();
-                if (value.Count == 0)
-                {
-                    _dictionary.Remove(key);
-                }
-                else
-                {
-                    _dictionary[key] = value;
-                }
-            }
+            return StringValues.Empty;
         }
-
-        public long? ContentLength
-        {
-            get
-            {
-                var rawValue = this[HeaderNames.ContentLength];
-                if (rawValue.Count == 1 &&
-                    !string.IsNullOrEmpty(rawValue[0]) &&
-                    HeaderUtilities.TryParseNonNegativeInt64(new StringSegment(rawValue[0]).Trim(), out long value))
-                {
-                    return value;
-                }
-
-                return null;
-            }
-            set
-            {
-                ThrowIfReadOnly();
-                if (value.HasValue)
-                {
-                    this[HeaderNames.ContentLength] = HeaderUtilities.FormatNonNegativeInt64(value.GetValueOrDefault());
-                }
-                else
-                {
-                    this.Remove(HeaderNames.ContentLength);
-                }
-            }
-        }
-
-        public ICollection<string> Keys => _dictionary.Keys;
-
-        public ICollection<StringValues> Values => _dictionary.Values;
-
-        public int Count => _dictionary.Count;
-
-        public bool IsReadOnly { get; set; }
-
-        public Mock<IHeaderDictionary> Mock => throw new InvalidOperationException();
-
-        public void Add(string key, StringValues value)
+        set
         {
             if (key == null)
             {
                 throw new ArgumentNullException(nameof(key));
             }
-            ThrowIfReadOnly();
-            _dictionary.Add(key, value);
-        }
 
-        public void Add(KeyValuePair<string, StringValues> item)
-        {
-            if (item.Key == null)
+            ThrowIfReadOnly();
+            if (value.Count == 0)
             {
-                throw new ArgumentNullException("The key is null");
+                _dictionary.Remove(key);
             }
-            ThrowIfReadOnly();
-            _dictionary.Add(item.Key, item.Value);
-        }
-
-        public void Clear()
-        {
-            ThrowIfReadOnly();
-            _dictionary.Clear();
-        }
-
-        public bool Contains(KeyValuePair<string, StringValues> item)
-        {
-            if (!_dictionary.TryGetValue(item.Key, out var value) ||
-                !StringValues.Equals(value, item.Value))
+            else
             {
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool ContainsKey(string key) => _dictionary.ContainsKey(key);
-
-        public void CopyTo(KeyValuePair<string, StringValues>[] array, int arrayIndex)
-        {
-            foreach (var item in _dictionary)
-            {
-                array[arrayIndex] = item;
-                arrayIndex++;
+                _dictionary[key] = value;
             }
         }
+    }
 
-        public IEnumerator<KeyValuePair<string, StringValues>> GetEnumerator() => _dictionary.GetEnumerator();
-
-        public bool Remove(string key)
+    public long? ContentLength
+    {
+        get
         {
-            ThrowIfReadOnly();
-
-            return _dictionary.Remove(key);
-        }
-
-        public bool Remove(KeyValuePair<string, StringValues> item)
-        {
-            ThrowIfReadOnly();
-            if (_dictionary.TryGetValue(item.Key, out var value) && StringValues.Equals(item.Value, value))
+            var rawValue = this[HeaderNames.ContentLength];
+            if (rawValue.Count == 1 &&
+                !string.IsNullOrEmpty(rawValue[0]) &&
+                HeaderUtilities.TryParseNonNegativeInt64(new StringSegment(rawValue[0]).Trim(), out long value))
             {
-                return _dictionary.Remove(item.Key);
+                return value;
             }
 
+            return null;
+        }
+        set
+        {
+            ThrowIfReadOnly();
+            if (value.HasValue)
+            {
+                this[HeaderNames.ContentLength] = HeaderUtilities.FormatNonNegativeInt64(value.GetValueOrDefault());
+            }
+            else
+            {
+                this.Remove(HeaderNames.ContentLength);
+            }
+        }
+    }
+
+    public ICollection<string> Keys => _dictionary.Keys;
+
+    public ICollection<StringValues> Values => _dictionary.Values;
+
+    public int Count => _dictionary.Count;
+
+    public bool IsReadOnly { get; set; }
+
+    public Mock<IHeaderDictionary> Mock => throw new InvalidOperationException();
+
+    public void Add(string key, StringValues value)
+    {
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
+        ThrowIfReadOnly();
+        _dictionary.Add(key, value);
+    }
+
+    public void Add(KeyValuePair<string, StringValues> item)
+    {
+        if (item.Key == null)
+        {
+            throw new ArgumentNullException("The key is null");
+        }
+        ThrowIfReadOnly();
+        _dictionary.Add(item.Key, item.Value);
+    }
+
+    public void Clear()
+    {
+        ThrowIfReadOnly();
+        _dictionary.Clear();
+    }
+
+    public bool Contains(KeyValuePair<string, StringValues> item)
+    {
+        if (!_dictionary.TryGetValue(item.Key, out var value) ||
+            !StringValues.Equals(value, item.Value))
+        {
             return false;
         }
 
-        public bool TryGetValue(string key, out StringValues value) => _dictionary.TryGetValue(key, out value);
+        return true;
+    }
 
-        IEnumerator IEnumerable.GetEnumerator() => _dictionary.GetEnumerator();
+    public bool ContainsKey(string key) => _dictionary.ContainsKey(key);
 
-        private void ThrowIfReadOnly()
+    public void CopyTo(KeyValuePair<string, StringValues>[] array, int arrayIndex)
+    {
+        foreach (var item in _dictionary)
         {
-            if (IsReadOnly)
-            {
-                throw new InvalidOperationException("The response headers cannot be modified because the response has already started.");
-            }
+            array[arrayIndex] = item;
+            arrayIndex++;
+        }
+    }
+
+    public IEnumerator<KeyValuePair<string, StringValues>> GetEnumerator() => _dictionary.GetEnumerator();
+
+    public bool Remove(string key)
+    {
+        ThrowIfReadOnly();
+
+        return _dictionary.Remove(key);
+    }
+
+    public bool Remove(KeyValuePair<string, StringValues> item)
+    {
+        ThrowIfReadOnly();
+        if (_dictionary.TryGetValue(item.Key, out var value) && StringValues.Equals(item.Value, value))
+        {
+            return _dictionary.Remove(item.Key);
+        }
+
+        return false;
+    }
+
+    public bool TryGetValue(string key, out StringValues value) => _dictionary.TryGetValue(key, out value);
+
+    IEnumerator IEnumerable.GetEnumerator() => _dictionary.GetEnumerator();
+
+    private void ThrowIfReadOnly()
+    {
+        if (IsReadOnly)
+        {
+            throw new InvalidOperationException("The response headers cannot be modified because the response has already started.");
         }
     }
 }
