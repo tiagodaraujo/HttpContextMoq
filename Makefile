@@ -1,13 +1,13 @@
 .PHONY: build test pack
 
 build:
-	dotnet build src/HttpContextMoq.sln
+	dotnet build HttpContextMoq.sln
 
 test:
-	dotnet test src/HttpContextMoq.sln
+	dotnet test HttpContextMoq.sln
 
 coverage:
-	dotnet test src/HttpContextMoq.sln --collect:"XPlat Code Coverage"
+	dotnet test HttpContextMoq.sln --collect:"XPlat Code Coverage"
 
 pack:
 	dotnet pack src/HttpContextMoq/HttpContextMoq.csproj -c Release --include-source --include-symbols -o nupkgs
