@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.0;netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;netstandard2.1;netcoreapp3.0;netcoreapp3.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
 		<AssemblyName>HttpContextMoq</AssemblyName>
 		<RootNamespace>HttpContextMoq</RootNamespace>
 		<AssetTargetFallback>
 			$(AssetTargetFallback);netstandard2.0;netstandard2.1
 		</AssetTargetFallback>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<WarningLevel>4</WarningLevel>
-		<LangVersion>10.0</LangVersion>
-		<NoWarn>NETSDK1138</NoWarn>
+		<LangVersion>12.0</LangVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
