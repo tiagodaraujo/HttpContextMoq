@@ -100,6 +100,9 @@ public static class ContextExtensions
     {
         httpContextMock.ResponseMock.Mock.Setup(x => x.Body).Returns(stream);
 
+#if NET9_0_OR_GREATER
+        httpContextMock.ResponseMock.Mock.Setup(s => s.BodyWriter).Returns(System.IO.Pipelines.PipeWriter.Create(stream));
+#endif
         return httpContextMock;
     }
 

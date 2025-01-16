@@ -88,6 +88,10 @@ namespace HttpContextMoq
             set => this.Mock.Object.StatusCode = value;
         }
 
+#if NET9_0_OR_GREATER
+        public override System.IO.Pipelines.PipeWriter BodyWriter => this.Mock.Object.BodyWriter;
+#endif
+
         internal void SetHeaders(IHeaderDictionary headers)
         {
             this._headers = headers;
