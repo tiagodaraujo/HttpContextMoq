@@ -55,6 +55,10 @@ public static class ContextExtensions
     {
         httpContextMock.RequestMock.Mock.Setup(x => x.Body).Returns(stream);
 
+#if NET9_0_OR_GREATER
+        httpContextMock.RequestMock.Mock.Setup(s => s.BodyReader).Returns(System.IO.Pipelines.PipeReader.Create(stream));
+#endif
+
         return httpContextMock;
     }
 
@@ -101,7 +105,7 @@ public static class ContextExtensions
         httpContextMock.ResponseMock.Mock.Setup(x => x.Body).Returns(stream);
 
 #if NET9_0_OR_GREATER
-        httpContextMock.ResponseMock.Mock.Setup(s => s.BodyWriter).Returns(System.IO.Pipelines.PipeWriter.Create(stream));
+        httpContextMock.ResponseMock.Mock.Setup(s => s.BodyWriter).Returns(System.IO.Pipelines.PipeWriter.Create(stream, writerOptions: new System.IO.Pipelines.StreamPipeWriterOptions(leaveOpen: true)));
 #endif
         return httpContextMock;
     }

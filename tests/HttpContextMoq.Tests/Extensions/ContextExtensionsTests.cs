@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -322,6 +323,30 @@ namespace HttpContextMoq.Extensions.Tests
             context.Response.Body.CopyTo(data);
 
             data.ToArray().Should().BeEquivalentTo(0x1, 0x2, 0x3);
+        }
+
+        [Fact]
+        public async Task SetupResponseBody_WhenValue_ShouldSetBodyWriter()
+        {
+            // Arrange
+            var context = new HttpContextMock();
+            var body = new MemoryStream();
+            body.Write(new byte[] { 0x1, 0x2, 0x3 });
+
+            // Act
+            context.SetupResponseBody(body);
+
+            // Write to the PipeWriter
+            var writer = context.Response.BodyWriter;
+            await writer.WriteAsync(new ReadOnlyMemory<byte>(new byte[] { 0x4 }));
+            await writer.CompleteAsync();
+
+            // Assert
+            var data = new MemoryStream();
+            context.Response.Body.Position = 0; // Reset the position to read from the beginning
+            await context.Response.Body.CopyToAsync(data);
+
+            data.ToArray().Should().BeEquivalentTo(new byte[] { 0x1, 0x2, 0x3, 0x4 });
         }
 
         [Fact]
