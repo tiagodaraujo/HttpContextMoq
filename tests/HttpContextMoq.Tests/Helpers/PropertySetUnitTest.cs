@@ -2,31 +2,24 @@
 using HttpContextMoq.Generic;
 using Moq;
 
-namespace HttpContextMoq.Tests
+namespace HttpContextMoq.Tests;
+
+public class PropertySetUnitTest<TContextMock, TContext>(
+    Action<TContext> setterExpression,
+    Func<Times> times = null)
+    : UnitTest<TContextMock>
+    where TContext : class
+    where TContextMock : class, IContextMock<TContext>, TContext
 {
-    public class PropertySetUnitTest<TContextMock, TContext> : UnitTest<TContextMock>
-        where TContext : class
-        where TContextMock : class, IContextMock<TContext>, TContext
+    public override void Run(Func<TContextMock> targetFactory)
     {
-        private readonly Action<TContext> _setterExpression;
-        private readonly Func<Times> _times;
+        // Arrange
+        var target = targetFactory.Invoke();
 
-        public PropertySetUnitTest(Action<TContext> setterExpression, Func<Times> times = null)
-        {
-            _setterExpression = setterExpression;
-            _times = times;
-        }
+        // Act
+        setterExpression.Invoke(target);
 
-        public override void Run(Func<TContextMock> targetFactory)
-        {
-            // Arrange
-            var target = targetFactory.Invoke();
-
-            // Act
-            _setterExpression.Invoke(target);
-
-            // Assert
-            target.Mock.VerifySet(_setterExpression, _times ?? Times.Once);
-        }
+        // Assert
+        target.Mock.VerifySet(setterExpression, times ?? Times.Once);
     }
 }

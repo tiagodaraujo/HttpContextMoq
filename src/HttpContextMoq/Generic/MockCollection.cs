@@ -1,27 +1,26 @@
-﻿namespace HttpContextMoq.Generic
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace HttpContextMoq.Generic;
+
+public class MockCollection
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    private readonly HashSet<object> collection;
 
-    public class MockCollection
+    public MockCollection(object context)
     {
-        private readonly HashSet<object> collection;
+        this.collection = [];
+        this.Add(context);
+    }
 
-        public MockCollection(object context)
-        {
-            this.collection = new HashSet<object>();
-            this.Add(context);
-        }
+    public T Get<T>() where T : class
+    {
+        return collection.FirstOrDefault(i => i is T) as T;
+    }
 
-        public T Get<T>() where T : class
-        {
-            return collection.FirstOrDefault(i => i is T) as T;
-        }
-
-        public void Add<T>(T mock) where T: class
-        {
-            collection.RemoveWhere(i => i is T);
-            collection.Add(mock);
-        }
+    public void Add<T>(T mock) where T: class
+    {
+        collection.RemoveWhere(i => i is T);
+        collection.Add(mock);
     }
 }

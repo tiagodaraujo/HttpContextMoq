@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace HttpContextMoq
+namespace HttpContextMoq;
+
+public class SessionFeatureFake : ISessionFeature
 {
-    public class SessionFeatureFake : ISessionFeature
-    {
-        public ISession Session { get; set; }
-    }
+    public ISession Session { get; set; }
 }

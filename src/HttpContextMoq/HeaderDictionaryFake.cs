@@ -96,6 +96,7 @@ public class HeaderDictionaryFake : IHeaderDictionaryMock
         {
             throw new ArgumentNullException(nameof(key));
         }
+
         ThrowIfReadOnly();
         _dictionary.Add(key, value);
     }
@@ -104,8 +105,9 @@ public class HeaderDictionaryFake : IHeaderDictionaryMock
     {
         if (item.Key == null)
         {
-            throw new ArgumentNullException("The key is null");
+            throw new ArgumentException("The item.key is null");
         }
+
         ThrowIfReadOnly();
         _dictionary.Add(item.Key, item.Value);
     }

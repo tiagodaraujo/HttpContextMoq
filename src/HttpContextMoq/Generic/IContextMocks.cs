@@ -1,7 +1,6 @@
-﻿namespace HttpContextMoq.Generic
+﻿namespace HttpContextMoq.Generic;
+
+public interface IContextMocks<TMock> : IContextMock<TMock> where TMock: class
 {
-    public interface IContextMocks<TMock> : IContextMock<TMock> where TMock: class
-    {
-        public MockCollection Mocks { get; }
-    }
+    public MockCollection Mocks { get; }
 }

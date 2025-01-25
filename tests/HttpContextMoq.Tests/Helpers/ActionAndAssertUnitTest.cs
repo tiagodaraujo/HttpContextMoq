@@ -1,31 +1,24 @@
 ﻿using System;
 
-namespace HttpContextMoq.Tests
+namespace HttpContextMoq.Tests;
+
+public class ActionAndAssertUnitTest<TTarget>(
+    Action<TTarget> act,
+    params Action<TTarget>[] asserts)
+    : UnitTest<TTarget> where TTarget : class
 {
-    public class ActionAndAssertUnitTest<TTarget> : UnitTest<TTarget> where TTarget : class
+    public override void Run(Func<TTarget> targetFactory)
     {
-        private readonly Action<TTarget> _act;
-        private readonly Action<TTarget>[] _asserts;
+        // Arrange
+        var target = targetFactory.Invoke();
 
-        public ActionAndAssertUnitTest(Action<TTarget> act, params Action<TTarget>[] asserts)
+        // Act
+        act(target);
+
+        // Assert
+        foreach (var assert in asserts)
         {
-            _act = act;
-            _asserts = asserts;
-        }
-
-        public override void Run(Func<TTarget> targetFactory)
-        {
-            // Arrange
-            var target = targetFactory.Invoke();
-
-            // Act
-            _act(target);
-
-            // Assert
-            foreach (var assert in _asserts)
-            {
-                assert(target);
-            }
+            assert(target);
         }
     }
 }

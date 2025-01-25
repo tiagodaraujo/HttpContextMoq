@@ -24,7 +24,7 @@ public class HttpContextItems
             .WhoseValue.Should().Be("contoso");
     }
 
-    private void MiddlewareInvoke(HttpContextMock httpContext)
+    private static void MiddlewareInvoke(HttpContextMock httpContext)
     {
         var tenantSegment = httpContext.Request.Path.Value.Split('/').Skip(1).First();
         httpContext.Items.Add("Tenant", tenantSegment);

@@ -1,9 +1,8 @@
 ﻿using Moq;
 
-namespace HttpContextMoq.Generic
+namespace HttpContextMoq.Generic;
+
+public interface IContextMock<TMock> where TMock: class
 {
-    public interface IContextMock<TMock> where TMock: class
-    {
-        public Mock<TMock> Mock { get; }
-    }
+    public Mock<TMock> Mock { get; }
 }
