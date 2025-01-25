@@ -322,7 +322,7 @@ namespace HttpContextMoq.Extensions.Tests
             var data = new MemoryStream();
             context.Response.Body.CopyTo(data);
 
-            data.ToArray().Should().BeEquivalentTo(0x1, 0x2, 0x3);
+            data.ToArray().Should().BeEquivalentTo([0x1, 0x2, 0x3]);
         }
 
         [Fact]

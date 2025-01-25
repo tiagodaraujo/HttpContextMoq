@@ -21,7 +21,7 @@ public class HttpContextItems
         // Assert
         httpContext.Items
             .Should().ContainKey("Tenant")
-            .WhichValue.Should().Be("contoso");
+            .WhoseValue.Should().Be("contoso");
     }
 
     private void MiddlewareInvoke(HttpContextMock httpContext)
